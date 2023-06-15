@@ -1,0 +1,13 @@
+{
+    "compilerOptions": {
+        "target": "es6",
+        "module": "ES2022",
+        "removeComments": true,
+        "esModuleInterop": true,
+        "allowJs": false,
+        "rootDir": "./src/",
+        "outDir": "./dist",
+        "sourceMap": true,
+        "moduleResolution": "node"
+    }
+}
