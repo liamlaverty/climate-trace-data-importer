@@ -14,6 +14,7 @@ Companion application to https://github.com/liamlaverty/climate-trace-data-downl
 
 ## Debugging 
 * run `npm install`
+
 * run `tsc` to build
 
 ## Deploying
@@ -27,4 +28,25 @@ Application can be found in the `src` folder, and the built application can be f
 -- --> data/
 -> dist/
 -- --> app.js
+```
+
+### Expected Data
+
+Before running, the `importer-settings.json` path should point to a folder with the following structure:
+
+```
+~/data_packages/climate_trace/
+ -> /country_packages/
+   -> /forest_sectors/
+     -> /ABW/
+     -> /AFG/
+     -> /AGO/
+   -> /non_forest_sectors/
+     -> /ABW/
+     -> /AFG/
+     -> /AGO/
+ -> /sector_packages/
+   -> /agriculture/
+   -> /buildings/
+   -> /plus /
 ```
