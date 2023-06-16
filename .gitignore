@@ -1,4 +1,5 @@
 data-files/importer-settings.json
+.env
 
 # Logs
 logs
