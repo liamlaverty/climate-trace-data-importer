@@ -3,6 +3,7 @@ import { DbConnector } from './db/connector.js';
 import { CountryData } from "./models/csv-models";
 import { DataInventory } from "./models/csv-models";
 import { DataInventoryItem } from "./models/csv-models";
+import { EnvVarValidator } from './EnvVarValidator.js';
 
 import 'dotenv/config'
 
@@ -22,20 +23,16 @@ class App {
      *
      */
     constructor() {
-        this.VerifyEnvVars();
-        this.filePathAbs = '';
+        EnvVarValidator.VerifyEnvVars();
         this.__filename = fileURLToPath(import.meta.url);
         this.__dirname = path.dirname(this.__filename);
         this.db = new DbConnector();
 
-
         this.filePathAbs = process.env.DATA_PACKAGE_FILE_PATH;
-
     }
 
     public Start() {
         console.log('starting, setting up data');
-        this.VerifyEnvVars();
         this.SetCountryList();
         this.SetInventoryList();
 
@@ -61,27 +58,6 @@ class App {
         this.inventoryList = JSON.parse(fs.readFileSync(filePath, 'utf-8'))
         // console.log(JSON.stringify(this.inventoryList))
     }
-
-    /* 
-    *   Verifies the process env vars are all set in this environment, 
-    *   if not, exits the program with an exception
-    */
-    private VerifyEnvVars(): void {
-        const envVarKeys = [
-            'DATA_PACKAGE_FILE_PATH',
-            'POSTGRES_USER',
-            'POSTGRES_PASSWORD',
-            'POSTGRES_DB'
-        ];
-
-        for (let i = 0; i < envVarKeys.length; i++) {
-            const pEnvVar = process.env[envVarKeys[i]];
-            if (pEnvVar === null || pEnvVar === undefined || pEnvVar.length === 0) {
-                throw new Error(`Process env var '${envVarKeys[i]}' was null or undefined. Set inside the file '.env' in the root of this project`);
-            }
-        }
-    }
-
 
     /* 
     *   For each country in the countryList, searches for that country's non-forest-sectors

@@ -3,13 +3,7 @@ import client from 'pg';
 const { Pool } = pkg;
 const { Client } = client
 
-const pool = new Pool({
-    user: 'dbuser',
-    host: 'database.server.com',
-    database: 'mydb',
-    password: 'secretpassword',
-    port: 3211,
-  })
+const pool = new Pool();
 
 export class DbConnector {
     /**
