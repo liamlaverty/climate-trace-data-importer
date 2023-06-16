@@ -1,6 +1,9 @@
+import { DbConnector } from './db/connector.js';
+
 import { CountryData } from "./models/csv-models";
 import { DataInventory } from "./models/csv-models";
 import { DataInventoryItem } from "./models/csv-models";
+
 import { fileURLToPath } from 'url';
 import * as path from 'path';
 import * as fs from 'fs';
@@ -8,6 +11,7 @@ import { country_electricity_emissions } from "./models/db-models/country_electr
 
 class App {
     filePathAbs: string;
+    db: DbConnector;
     countryList: CountryData[];
     inventoryList: [];
     __filename;
@@ -19,6 +23,7 @@ class App {
         this.filePathAbs = '';
         this.__filename = fileURLToPath(import.meta.url);
         this.__dirname = path.dirname(this.__filename);
+        this.db = new DbConnector();
     }
 
     public Start() {
@@ -68,7 +73,7 @@ class App {
     *   For each country in the countryList, searches for that country's non-forest-sectors
     *   and saves each of their emissions data into the database 
     */ 
-    private ImportData() {
+    private async ImportData() {
         console.log('filepath: ' + this.filePathAbs);
 
 
@@ -81,6 +86,10 @@ class App {
                     inventoryList.inventories.forEach((inventory: DataInventoryItem) => {
                         if (inventory.fileName == 'country_electricity-generation_emissions.csv')
                         console.log('-- --> ' + inventory.fileName + ' into ' + inventory.destinationTable);
+                        let result = this.db.query(
+                            'SELECT * FROM country_electricity_emissions', null, null
+                        ); 
+                        console.log('result' + result);
                     });
                 });
 
