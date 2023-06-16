@@ -73,11 +73,11 @@ class App {
 
 
         this.countryList.forEach(country => {
-            if (country.alpha3 === "GBR"){
+            if (country.alpha3 === "GBR" || country.alpha3 === 'USA'){
                 // restrict to GBR for testing
-                console.log(`importing ${country.name} - ${country.alpha3}`)
+                // console.log(`importing ${country.name} - ${country.alpha3}`)
                 this.inventoryList.forEach((inventoryList:  DataInventory) => {
-                    console.log('--> ' + inventoryList.directory);
+                    console.log(country.alpha3 + '--> ' + inventoryList.directory);
                     inventoryList.inventories.forEach((inventory: DataInventoryItem) => {
                         if (inventory.fileName == 'country_electricity-generation_emissions.csv')
                         console.log('-- --> ' + inventory.fileName + ' into ' + inventory.destinationTable);
