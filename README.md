@@ -7,6 +7,7 @@ Companion application to https://github.com/liamlaverty/climate-trace-data-downl
 ## Usage
 
 * run `npm install`
+* run `npm install typescript --save-dev` to add typescript to your local env
 * run `tsc` to build
 * Configure the app by copying `./data-files/importer-settings.example.json` into `./data-files/importer-settings.json`, and editing the file
 * run `node .\dist\app.js` to run 
