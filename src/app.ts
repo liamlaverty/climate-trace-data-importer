@@ -68,67 +68,60 @@ class App {
     private async ImportData() {
         console.log('filepath: ' + this.filePathAbs);
 
-
         this.countryList.forEach(country => {
-            if (country.alpha3 === "GBR") { //  || country.alpha3 === 'USA') {
-                // restrict to GBR for testing
-                // console.log(`importing ${country.name} - ${country.alpha3}`)
-                this.inventoryList.forEach((inventoryList: DataInventory) => {
-                    // console.log(country.alpha3 + '--> ' + inventoryList.directory);
-                    inventoryList.inventories.forEach((inventory: DataInventoryItem) => {
-                        if (inventory.fileName == 'country_electricity-generation_emissions.csv') {
+            // if (country.alpha3 !== "GBR"){ return; } 
 
-                            // foreach row in the db, insert
+            this.inventoryList.forEach((inventoryList: DataInventory) => {
+                // console.log(country.alpha3 + '--> ' + inventoryList.directory);
+                inventoryList.inventories.forEach((inventory: DataInventoryItem) => {
+                    if (inventory.fileName == 'country_electricity-generation_emissions.csv') {
 
-                            const filePath = path.resolve(this.filePathAbs, `./climate_trace/country_packages/non_forest_sectors/${country.alpha3}/${inventoryList.directory}/${inventory.fileName}`);
-                            console.log(`opening: ${filePath}`);
-                            const fileContents = fs.readFileSync(filePath, 'utf-8');
-                            parse(fileContents, {
-                                delimiter: ',',
-                                columns: [
-                                    'iso3_country',
-                                    'start_time',
-                                    'end_time',
-                                    'original_inventory_sector',
-                                    'gas',
-                                    'emissions_quantity',
-                                    'emissions_quantity_units',
-                                    'temporal_granularity',
-                                    'created_date',
-                                    'modified_date'
-                                ]
-                            }, (error, result: country_electricity_emissions[]) => {
-                                if (error) {
-                                    console.error(error);
+                        // foreach row in the db, insert
+
+                        const filePath = path.resolve(this.filePathAbs, `./climate_trace/country_packages/non_forest_sectors/${country.alpha3}/${inventoryList.directory}/${inventory.fileName}`);
+                        console.log(`opening: ${filePath}`);
+                        const fileContents = fs.readFileSync(filePath, 'utf-8');
+                        parse(fileContents, {
+                            delimiter: ',',
+                            columns: [
+                                'iso3_country',
+                                'start_time',
+                                'end_time',
+                                'original_inventory_sector',
+                                'gas',
+                                'emissions_quantity',
+                                'emissions_quantity_units',
+                                'temporal_granularity',
+                                'created_date',
+                                'modified_date'
+                            ],
+                            fromLine: 2,
+                            cast: (columnVal, context) => {
+                                if (context.column == 'emissions_quantity') { 
+                                    const res = parseInt(columnVal);
+                                    return isNaN(res) ?  0 : res;
                                 }
-                                console.log(result); 
-                                for (var i = 1; i < result.length; i++){
+                                else { return columnVal; }
+                            }
+                        }, (error, result: country_electricity_emissions[]) => {
+                            if (error) {
+                                console.error(error);
+                            }
+                            console.log(result); 
+                            for (var i = 0; i < result.length; i++){
+                                try{
                                     const insResult = this.db.insert_country_electricity_emissions(result[i], null);
+                                } catch (er) {
+                                    console.error(`Err in ${country.alpha3} on line ${i}: "${er}"`);
                                 }
-                            })
-
-                            // then run select * from 
-                            let result = this.db.query(
-                                'SELECT * FROM country_electricity_emissions', null, null
-                            );
-                            // console.log('result' + result);
-                        }
-                    });
+                            }
+                        });
+                    }
                 });
-
-            }
-        });
-        // find files in the path:
-        // \climate_trace\country_packages\non_forest_sectors\GBR\power\country_electricity-generation_emissions.csv
-
-
-        fs.readdir(this.filePathAbs, (err, files) => {
-            files.forEach(file => {
-                console.log(file)
             });
-
         });
 
+        console.log('completed import')
     }
 
 }

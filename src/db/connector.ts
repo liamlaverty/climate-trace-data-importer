@@ -25,7 +25,7 @@ export class DbConnector {
 
     public insert_country_electricity_emissions(country_emissions: country_electricity_emissions, callback) {
         // console.log(`upserting query ${JSON.stringify(country_emissions)}`);
-        const dateNow = Date.parse(new Date().toUTCString());
+        const dateNow = new Date().toISOString();
         const query = {
             name: 'insert-country-electricity-emissions',
             text: 
@@ -58,21 +58,25 @@ export class DbConnector {
                     $11, 
                     $12, 
                     $13
-                )`,
+                )
+                ON CONFLICT
+                    ON CONSTRAINT country_electricity_emissions_pkey
+                        DO NOTHING
+                `,
             values: [
                 country_emissions.iso3_country,
-                null, //Date.parse(country_emissions.start_time),
-                null, //Date.parse(country_emissions.end_time),
+                country_emissions.start_time,
+                country_emissions.end_time,
                 country_emissions.original_inventory_sector,
                 country_emissions.gas,
                 country_emissions.emissions_quantity,
                 country_emissions.emissions_quantity_units,
                 country_emissions.temporal_granularity,
                 country_electricity_emissions.origin_source,
-                null, //Date.parse(country_emissions.source_created_date),
-                null, //Date.parse(country_emissions.source_modified_date),
-                null, //dateNow,
-                null, //dateNow
+                country_emissions.source_created_date,
+                country_emissions.source_modified_date,
+                dateNow,
+                dateNow
             ]
         }
         console.log(query);

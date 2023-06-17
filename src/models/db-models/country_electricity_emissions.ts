@@ -9,7 +9,7 @@ export class country_electricity_emissions {
     end_time: string;
     original_inventory_sector: string;
     gas: string;
-    emissions_quantity: string;
+    emissions_quantity: number;
     emissions_quantity_units: string;
     temporal_granularity: string;
     origin_source: string = 'climate_trace';
