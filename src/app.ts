@@ -10,6 +10,7 @@ import 'dotenv/config'
 import { fileURLToPath } from 'url';
 import * as path from 'path';
 import * as fs from 'fs';
+import { parse } from 'csv-parse';
 import { country_electricity_emissions } from "./models/db-models/country_electricity_emissions";
 
 class App {
@@ -26,13 +27,14 @@ class App {
         EnvVarValidator.VerifyEnvVars();
         this.__filename = fileURLToPath(import.meta.url);
         this.__dirname = path.dirname(this.__filename);
-        this.db = new DbConnector();
 
         this.filePathAbs = process.env.DATA_PACKAGE_FILE_PATH;
     }
 
     public Start() {
         console.log('starting, setting up data');
+        this.db = new DbConnector();
+
         this.SetCountryList();
         this.SetInventoryList();
 
@@ -68,14 +70,44 @@ class App {
 
 
         this.countryList.forEach(country => {
-            if (country.alpha3 === "GBR" || country.alpha3 === 'USA') {
+            if (country.alpha3 === "GBR") { //  || country.alpha3 === 'USA') {
                 // restrict to GBR for testing
                 // console.log(`importing ${country.name} - ${country.alpha3}`)
                 this.inventoryList.forEach((inventoryList: DataInventory) => {
                     // console.log(country.alpha3 + '--> ' + inventoryList.directory);
                     inventoryList.inventories.forEach((inventory: DataInventoryItem) => {
                         if (inventory.fileName == 'country_electricity-generation_emissions.csv') {
-                            // console.log('-- --> ' + inventory.fileName + ' into ' + inventory.destinationTable);
+
+                            // foreach row in the db, insert
+
+                            const filePath = path.resolve(this.filePathAbs, `./climate_trace/country_packages/non_forest_sectors/${country.alpha3}/${inventoryList.directory}/${inventory.fileName}`);
+                            console.log(`opening: ${filePath}`);
+                            const fileContents = fs.readFileSync(filePath, 'utf-8');
+                            parse(fileContents, {
+                                delimiter: ',',
+                                columns: [
+                                    'iso3_country',
+                                    'start_time',
+                                    'end_time',
+                                    'original_inventory_sector',
+                                    'gas',
+                                    'emissions_quantity',
+                                    'emissions_quantity_units',
+                                    'temporal_granularity',
+                                    'created_date',
+                                    'modified_date'
+                                ]
+                            }, (error, result: country_electricity_emissions[]) => {
+                                if (error) {
+                                    console.error(error);
+                                }
+                                console.log(result); 
+                                for (var i = 1; i < result.length; i++){
+                                    const insResult = this.db.insert_country_electricity_emissions(result[i], null);
+                                }
+                            })
+
+                            // then run select * from 
                             let result = this.db.query(
                                 'SELECT * FROM country_electricity_emissions', null, null
                             );

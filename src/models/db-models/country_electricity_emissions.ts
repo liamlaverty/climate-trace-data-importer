@@ -1,6 +1,8 @@
 export class country_electricity_emissions {
 
-    tableName: string = 'country_electricity_emissions';
+    static tableName: string = 'country_electricity_emissions';
+    static origin_source: string = 'climate_trace';
+
     id: string;
     iso3_country: string;
     start_time: string;
@@ -10,7 +12,7 @@ export class country_electricity_emissions {
     emissions_quantity: string;
     emissions_quantity_units: string;
     temporal_granularity: string;
-    origin_source: string;
+    origin_source: string = 'climate_trace';
     source_created_date: string;
     source_modified_date: string;
     created_date: string;
