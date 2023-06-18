@@ -12,8 +12,8 @@ import * as path from 'path';
 import * as fs from 'fs';
 import { CountryElectricityEmissionsConnector } from './db/table-connectors/CountryElectricityEmissionsConnector.js';
 import { CountryElectricityGenerationEmissionsImporter } from './importers/CountryElectricityGenerationEmissionsImporter.js';
-import { AssetElectricityGenerationEmissionsImporter } from './importers/AssetElectricityGenerationEmissionsImporter.js';
-import { AssetElectricityGenerationEmissionsConnector } from './db/table-connectors/AssetElectricityGenerationEmissionsConnector.js';
+import { AssetEmissionsImporter } from './importers/AssetEmissionsImporter.js';
+import { AssetEmissionsConnector } from './db/table-connectors/AssetEmissionsConnector.js';
 
 class App {
     filePathAbs: string;
@@ -23,7 +23,7 @@ class App {
     __filename;
     __dirname;
     countryElectricityEmissionsConnector: CountryElectricityEmissionsConnector;
-    assetElectricityGenerationEmissionsConnector: AssetElectricityGenerationEmissionsConnector;
+    assetEmissionsConnector: AssetEmissionsConnector;
     /**
      *
      */
@@ -39,7 +39,7 @@ class App {
         console.log('starting, setting up data');
         this.db = new DbConnector();
         this.countryElectricityEmissionsConnector = new CountryElectricityEmissionsConnector(this.db);
-        this.assetElectricityGenerationEmissionsConnector = new AssetElectricityGenerationEmissionsConnector(this.db);
+        this.assetEmissionsConnector = new AssetEmissionsConnector(this.db);
 
         this.SetCountryList();
         this.SetInventoryList();
@@ -75,24 +75,30 @@ class App {
         console.log('filepath: ' + this.filePathAbs);
 
         this.countryList.forEach(country => {
-            if (country.alpha3 !== "GBR") { return; }
+            if (country.alpha3 !== "GBR" && country.alpha3 !== "AFG" && country.alpha3 !== "USA") { return; }
 
             this.inventoryList.forEach((inventoryList: DataInventory) => {
                 inventoryList.inventories.forEach(async (inventory: DataInventoryItem) => {
 
                     const filePath = path.resolve(this.filePathAbs, `./climate_trace/country_packages/non_forest_sectors/${country.alpha3}/${inventoryList.directory}/${inventory.fileName}`);
-                    switch (inventory.fileName) {
-                        case 'asset_electricity-generation_emissions.csv':
-                            await AssetElectricityGenerationEmissionsImporter.Import(filePath, country.alpha3, this.assetElectricityGenerationEmissionsConnector);
-
-                            break;
-                        case 'country_electricity-generation_emissions.csv':
-                            await CountryElectricityGenerationEmissionsImporter.Import(filePath, country.alpha3, this.countryElectricityEmissionsConnector);
-                            break;
-                        
-                        default:
-                            console.log(`did not import file ${inventory.fileName}`);
-                            break;
+                    if (!fs.existsSync(filePath)) {
+                        console.log(`${country.alpha3}: file at path did not exist: '${filePath}'`);
+                    } else {
+                        switch (inventory.fileName) {
+                            case 'asset_aluminum_emissions.csv':
+                                // await AssetEmissionsImporter.Import(filePath, country.alpha3, this.assetEmissionsConnector);
+                                break;
+                            case 'asset_electricity-generation_emissions.csv':
+                                await AssetEmissionsImporter.Import(filePath, country.alpha3, this.assetEmissionsConnector);
+                                break;
+                            case 'country_electricity-generation_emissions.csv':
+                                // await CountryElectricityGenerationEmissionsImporter.Import(filePath, country.alpha3, this.countryElectricityEmissionsConnector);
+                                break;
+                            
+                            default:
+                                console.log(`did not import file ${inventory.fileName}`);
+                                break;
+                        }
                     }
                 });
             });

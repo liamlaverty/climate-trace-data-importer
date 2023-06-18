@@ -1,7 +1,7 @@
 import { AssetEmissions } from "../../models/db-models/AssetEmissions.js";
 import { DbConnector } from "../DbConnector.js";
 
-export class AssetElectricityGenerationEmissionsConnector {
+export class AssetEmissionsConnector {
     database: DbConnector; 
 
     /**
@@ -64,7 +64,7 @@ export class AssetElectricityGenerationEmissionsConnector {
                 asset_emissions.activity,
                 asset_emissions.activity_units,
                 asset_emissions.created_date,
-                asset_emissions.modified_date,
+                asset_emissions.modified_date.length > 0 ? asset_emissions.modified_date : null,
                 asset_emissions.asset_name,
                 asset_emissions.asset_type,
                 asset_emissions.st_astext,

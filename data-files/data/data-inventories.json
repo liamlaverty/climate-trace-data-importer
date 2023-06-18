@@ -3,7 +3,6 @@
         "directory": "power",
         "inventories": [
             {
-                
                 "fileName": "asset_electricity-generation_emissions.csv"
             },
             {
@@ -15,6 +14,14 @@
             },
             {
                 "fileName": "country_other-energy-use_emissions.csv"
+            }
+        ]
+    },
+    {
+        "directory": "manufacturing",
+        "inventories": [
+            {
+                "fileName": "asset_aluminum_emissions.csv"
             }
         ]
     }
