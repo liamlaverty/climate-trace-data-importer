@@ -4,32 +4,55 @@ import { country_electricity_emissions } from '../models/db-models/country_elect
 const { Pool } = pkg;
 const { Client } = client
 
-const pool = new Pool();
 
 export class DbConnector {
+
+    private pool;
+
     /**
      *
      */
+
     constructor() {
+        this.pool = new Pool();
     }
 
-    public query(text, params, callback) {
-        console.log(`executing query ${text} ${params}`);
-        return pool.query(text, params, callback);
+    public query = async (text, params, callback) => {
+        const client = await this.pool.connect();
+        const result = client.query(text, params, callback);
+        try {
+            await result;
+        } catch (error) {
+            console.error('err ' + error);
+            throw error;
+        }
+        client.release();
+        return result;
     }
 
-    private insert(query, callback) {
-        return pool.query(query);
+    private insert = async (query, callback) => {
+        const client = await this.pool.connect();
+        const result = client.query(query);
+        try {
+            await result;
+        } catch (error) {
+            console.error(error);
+            throw error;
+        }
+        client.release();
+        return result;
     }
-        
 
-    public insert_country_electricity_emissions(country_emissions: country_electricity_emissions, callback) {
+
+
+
+    public insert_country_electricity_emissions = async(country_emissions: country_electricity_emissions, callback) => {
         // console.log(`upserting query ${JSON.stringify(country_emissions)}`);
         const dateNow = new Date().toISOString();
         const query = {
             name: 'insert-country-electricity-emissions',
-            text: 
-            `INSERT INTO country_electricity_emissions(
+            text:
+                `INSERT INTO country_electricity_emissions(
                 iso3_country, 
                 start_time, 
                 end_time, 
@@ -80,9 +103,9 @@ export class DbConnector {
             ]
         }
         console.log(query);
-        return this.insert(query, callback);
+        return await this.insert(query, callback);
     }
-    
+
 }
 
 

@@ -65,14 +65,16 @@ class App {
     *   For each country in the countryList, searches for that country's non-forest-sectors
     *   and saves each of their emissions data into the database 
     */
-    private async ImportData() {
+    private ImportData = async() => {
         console.log('filepath: ' + this.filePathAbs);
 
+        var result = await this.db.query("SELECT * FROM country_electricity_emissions LIMIT 10", null, null);
+        console.log(`queried : ${result.rows.length} items`);
+
         this.countryList.forEach(country => {
-            // if (country.alpha3 !== "GBR"){ return; } 
+            if (country.alpha3 !== "GBR"){ return; } 
 
             this.inventoryList.forEach((inventoryList: DataInventory) => {
-                // console.log(country.alpha3 + '--> ' + inventoryList.directory);
                 inventoryList.inventories.forEach((inventory: DataInventoryItem) => {
                     if (inventory.fileName == 'country_electricity-generation_emissions.csv') {
 
@@ -103,14 +105,14 @@ class App {
                                 }
                                 else { return columnVal; }
                             }
-                        }, (error, result: country_electricity_emissions[]) => {
+                        }, async (error, result: country_electricity_emissions[]) => {
                             if (error) {
                                 console.error(error);
                             }
                             console.log(result); 
                             for (var i = 0; i < result.length; i++){
                                 try{
-                                    const insResult = this.db.insert_country_electricity_emissions(result[i], null);
+                                    const insResult = await this.db.insert_country_electricity_emissions(result[i], null);
                                 } catch (er) {
                                     console.error(`Err in ${country.alpha3} on line ${i}: "${er}"`);
                                 }
