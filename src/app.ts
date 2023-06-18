@@ -10,9 +10,10 @@ import 'dotenv/config'
 import { fileURLToPath } from 'url';
 import * as path from 'path';
 import * as fs from 'fs';
-import { parse } from 'csv-parse';
-import { country_electricity_emissions } from "./models/db-models/country_electricity_emissions";
 import { CountryElectricityEmissionsConnector } from './db/table-connectors/CountryElectricityEmissionsConnector.js';
+import { CountryElectricityGenerationEmissionsImporter } from './importers/CountryElectricityGenerationEmissionsImporter.js';
+import { AssetElectricityGenerationEmissionsImporter } from './importers/AssetElectricityGenerationEmissionsImporter.js';
+import { AssetElectricityGenerationEmissionsConnector } from './db/table-connectors/AssetElectricityGenerationEmissionsConnector.js';
 
 class App {
     filePathAbs: string;
@@ -22,6 +23,7 @@ class App {
     __filename;
     __dirname;
     countryElectricityEmissionsConnector: CountryElectricityEmissionsConnector;
+    assetElectricityGenerationEmissionsConnector: AssetElectricityGenerationEmissionsConnector;
     /**
      *
      */
@@ -37,6 +39,7 @@ class App {
         console.log('starting, setting up data');
         this.db = new DbConnector();
         this.countryElectricityEmissionsConnector = new CountryElectricityEmissionsConnector(this.db);
+        this.assetElectricityGenerationEmissionsConnector = new AssetElectricityGenerationEmissionsConnector(this.db);
 
         this.SetCountryList();
         this.SetInventoryList();
@@ -68,59 +71,28 @@ class App {
     *   For each country in the countryList, searches for that country's non-forest-sectors
     *   and saves each of their emissions data into the database 
     */
-    private ImportData = async() => {
+    private ImportData = async () => {
         console.log('filepath: ' + this.filePathAbs);
 
-        var result = await this.db.query("SELECT * FROM country_electricity_emissions LIMIT 10", null, null);
-        console.log(`queried : ${result.rows.length} items`);
-
         this.countryList.forEach(country => {
-            if (country.alpha3 !== "GBR"){ return; } 
+            if (country.alpha3 !== "GBR") { return; }
 
             this.inventoryList.forEach((inventoryList: DataInventory) => {
-                inventoryList.inventories.forEach((inventory: DataInventoryItem) => {
-                    if (inventory.fileName == 'country_electricity-generation_emissions.csv') {
+                inventoryList.inventories.forEach(async (inventory: DataInventoryItem) => {
 
-                        // foreach row in the db, insert
+                    const filePath = path.resolve(this.filePathAbs, `./climate_trace/country_packages/non_forest_sectors/${country.alpha3}/${inventoryList.directory}/${inventory.fileName}`);
+                    switch (inventory.fileName) {
+                        case 'asset_electricity-generation_emissions.csv':
+                            await AssetElectricityGenerationEmissionsImporter.Import(filePath, country.alpha3, this.assetElectricityGenerationEmissionsConnector);
 
-                        const filePath = path.resolve(this.filePathAbs, `./climate_trace/country_packages/non_forest_sectors/${country.alpha3}/${inventoryList.directory}/${inventory.fileName}`);
-                        console.log(`opening: ${filePath}`);
-                        const fileContents = fs.readFileSync(filePath, 'utf-8');
-                        parse(fileContents, {
-                            delimiter: ',',
-                            columns: [
-                                'iso3_country',
-                                'start_time',
-                                'end_time',
-                                'original_inventory_sector',
-                                'gas',
-                                'emissions_quantity',
-                                'emissions_quantity_units',
-                                'temporal_granularity',
-                                'created_date',
-                                'modified_date'
-                            ],
-                            fromLine: 2,
-                            cast: (columnVal, context) => {
-                                if (context.column == 'emissions_quantity') { 
-                                    const res = parseInt(columnVal);
-                                    return isNaN(res) ?  0 : res;
-                                }
-                                else { return columnVal; }
-                            }
-                        }, async (error, result: country_electricity_emissions[]) => {
-                            if (error) {
-                                console.error(error);
-                            }
-                            console.log(result); 
-                            for (var i = 0; i < result.length; i++){
-                                try{
-                                    const insResult = await this.countryElectricityEmissionsConnector.insert(result[i], null);
-                                } catch (er) {
-                                    console.error(`Err in ${country.alpha3} on line ${i}: "${er}"`);
-                                }
-                            }
-                        });
+                            break;
+                        case 'country_electricity-generation_emissions.csv':
+                            await CountryElectricityGenerationEmissionsImporter.Import(filePath, country.alpha3, this.countryElectricityEmissionsConnector);
+                            break;
+                        
+                        default:
+                            console.log(`did not import file ${inventory.fileName}`);
+                            break;
                     }
                 });
             });
@@ -129,6 +101,9 @@ class App {
         console.log('completed import')
     }
 
+
+
+    
 }
 
 const application = new App();

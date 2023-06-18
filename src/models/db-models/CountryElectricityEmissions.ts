@@ -1,7 +1,9 @@
-export class country_electricity_emissions {
+import { TrackedDataEntity } from "./TrackedDataEntity.js";
+
+
+export class CountryElectricityEmissions extends TrackedDataEntity {
 
     static tableName: string = 'country_electricity_emissions';
-    static origin_source: string = 'climate_trace';
 
     id: string;
     iso3_country: string;
@@ -12,9 +14,6 @@ export class country_electricity_emissions {
     emissions_quantity: number;
     emissions_quantity_units: string;
     temporal_granularity: string;
-    origin_source: string = 'climate_trace';
-    source_created_date: string;
-    source_modified_date: string;
     created_date: string;
     modified_date: string;
 }

@@ -1,6 +1,6 @@
 import pkg from 'pg';
 import client from 'pg';
-import { country_electricity_emissions } from '../models/db-models/country_electricity_emissions.js';
+import { CountryElectricityEmissions } from '../models/db-models/CountryElectricityEmissions.js';
 const { Pool } = pkg;
 const { Client } = client
 
