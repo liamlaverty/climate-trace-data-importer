@@ -1,4 +1,4 @@
-import { DbConnector } from './db/connector.js';
+import { DbConnector } from './db/DbConnector.js';
 
 import { CountryData } from "./models/csv-models";
 import { DataInventory } from "./models/csv-models";
@@ -12,6 +12,7 @@ import * as path from 'path';
 import * as fs from 'fs';
 import { parse } from 'csv-parse';
 import { country_electricity_emissions } from "./models/db-models/country_electricity_emissions";
+import { CountryElectricityEmissionsConnector } from './db/table-connectors/CountryElectricityEmissionsConnector.js';
 
 class App {
     filePathAbs: string;
@@ -20,6 +21,7 @@ class App {
     inventoryList: [];
     __filename;
     __dirname;
+    countryElectricityEmissionsConnector: CountryElectricityEmissionsConnector;
     /**
      *
      */
@@ -34,6 +36,7 @@ class App {
     public Start() {
         console.log('starting, setting up data');
         this.db = new DbConnector();
+        this.countryElectricityEmissionsConnector = new CountryElectricityEmissionsConnector(this.db);
 
         this.SetCountryList();
         this.SetInventoryList();
@@ -112,7 +115,7 @@ class App {
                             console.log(result); 
                             for (var i = 0; i < result.length; i++){
                                 try{
-                                    const insResult = await this.db.insert_country_electricity_emissions(result[i], null);
+                                    const insResult = await this.countryElectricityEmissionsConnector.insert(result[i], null);
                                 } catch (er) {
                                     console.error(`Err in ${country.alpha3} on line ${i}: "${er}"`);
                                 }

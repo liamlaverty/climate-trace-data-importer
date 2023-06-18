@@ -1,52 +1,16 @@
-import pkg from 'pg';
-import client from 'pg';
-import { country_electricity_emissions } from '../models/db-models/country_electricity_emissions.js';
-const { Pool } = pkg;
-const { Client } = client
+import { country_electricity_emissions } from "../../models/db-models/country_electricity_emissions.js";
+import { DbConnector } from "../DbConnector.js";
 
-
-export class DbConnector {
-
-    private pool;
-
+export class CountryElectricityEmissionsConnector {
+    database: DbConnector;
     /**
      *
      */
-
-    constructor() {
-        this.pool = new Pool();
+    constructor(conn: DbConnector) {
+        this.database = conn;
     }
 
-    public query = async (text, params, callback) => {
-        const client = await this.pool.connect();
-        const result = client.query(text, params, callback);
-        try {
-            await result;
-        } catch (error) {
-            console.error('err ' + error);
-            throw error;
-        }
-        client.release();
-        return result;
-    }
-
-    private insert = async (query, callback) => {
-        const client = await this.pool.connect();
-        const result = client.query(query);
-        try {
-            await result;
-        } catch (error) {
-            console.error(error);
-            throw error;
-        }
-        client.release();
-        return result;
-    }
-
-
-
-
-    public insert_country_electricity_emissions = async(country_emissions: country_electricity_emissions, callback) => {
+    public insert = async(country_emissions: country_electricity_emissions, callback) => {
         // console.log(`upserting query ${JSON.stringify(country_emissions)}`);
         const dateNow = new Date().toISOString();
         const query = {
@@ -103,9 +67,8 @@ export class DbConnector {
             ]
         }
         console.log(query);
-        return await this.insert(query, callback);
+        return await this.database.insert(query, callback);
     }
+    
 
 }
-
-
