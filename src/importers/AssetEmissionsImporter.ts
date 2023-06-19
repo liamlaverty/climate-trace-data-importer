@@ -5,7 +5,8 @@ import { AssetEmissions } from '../models/db-models/AssetEmissions.js';
 
 
 export class AssetEmissionsImporter {
-    static Import = async(filePath: string, countryAlpha3: string, dbConn: AssetEmissionsConnector, includeActivityColumns: Boolean = false) => {
+    static Import = async(filePath: string, countryAlpha3: string, dbConn: AssetEmissionsConnector, 
+        includeActivityColumns: Boolean = false, includeLatLonColumns: Boolean = false) => {
         console.log(`opening: ${filePath}`);
         const fileContents = fs.readFileSync(filePath, 'utf-8');
 
@@ -31,9 +32,10 @@ export class AssetEmissionsImporter {
         ];
         if (includeActivityColumns){
             // some csv sets don't include this data, others do
-            // 
-            tableColumns.splice(13, 0, 'activity','activity_units'
-            )
+            tableColumns.splice(13, 0, 'activity','activity_units')
+        }
+        if (includeLatLonColumns) {
+            tableColumns.splice(6, 0, 'Lat_lon')
         }
 
         parse(fileContents, {
@@ -52,7 +54,7 @@ export class AssetEmissionsImporter {
             }
         }, async (error, result: AssetEmissions[]) => {
             if (error) {
-                console.error(error);
+                console.error(`error reading ${filePath}` + error);
             }
             // console.log(result);
             for (var i = 0; i < result.length; i++) {

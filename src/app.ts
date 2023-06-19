@@ -35,7 +35,7 @@ class App {
         this.filePathAbs = process.env.DATA_PACKAGE_FILE_PATH;
     }
 
-    public Start() {
+    public Start = async () => {
         console.log('starting, setting up data');
         this.db = new DbConnector();
         this.countryElectricityEmissionsConnector = new CountryElectricityEmissionsConnector(this.db);
@@ -45,7 +45,9 @@ class App {
         this.SetInventoryList();
 
         console.log('importing data');
-        this.ImportData();
+        await this.ImportData();
+        console.log('completed importing data');
+
     }
 
     /* 
@@ -74,55 +76,70 @@ class App {
     private ImportData = async () => {
         console.log('filepath: ' + this.filePathAbs);
 
-        this.countryList.forEach(country => {
-            if (country.alpha3 !== "GBR" && country.alpha3 !== "AFG" && country.alpha3 !== "USA") { return; }
+        for (var c = 0; c < this.countryList.length; c++) {
+            const thisCountry = this.countryList[c];
+            if (thisCountry.alpha3 !== "GBR" && thisCountry.alpha3 !== "AFG") { continue; }
 
-            this.inventoryList.forEach((inventoryList: DataInventory) => {
-                inventoryList.inventories.forEach(async (inventory: DataInventoryItem) => {
+            for (var il = 0; il < this.inventoryList.length; il++) {
+                const thisInventoryList: DataInventory = this.inventoryList[il];
 
-                    const filePath = path.resolve(this.filePathAbs, `./climate_trace/country_packages/non_forest_sectors/${country.alpha3}/${inventoryList.directory}/${inventory.fileName}`);
+                for (var inventoryIdx = 0; inventoryIdx < thisInventoryList.inventories.length; inventoryIdx++) {
+                    const thisInventory: DataInventoryItem = thisInventoryList.inventories[inventoryIdx];
+
+                    const filePath = path.resolve(this.filePathAbs, `./climate_trace/country_packages/non_forest_sectors/${thisCountry.alpha3}/${thisInventoryList.directory}/${thisInventory.fileName}`);
                     if (!fs.existsSync(filePath)) {
-                        console.log(`${country.alpha3}: file at path did not exist: '${filePath}'`);
+                        console.log(`${thisCountry.alpha3}: file at path did not exist: '${filePath}'`);
                     } else {
-                        switch (inventory.fileName) {
+                        switch (thisInventory.fileName) {
                             case 'asset_aluminum_emissions.csv':
                                 await AssetEmissionsImporter.Import(
-                                    filePath, 
-                                    country.alpha3, 
+                                    filePath,
+                                    thisCountry.alpha3,
                                     this.assetEmissionsConnector,
                                     false);
                                 break;
-                            case 'asset_electricity-generation_emissions.csv':
-                                 await AssetEmissionsImporter.Import(
-                                     filePath,
-                                      country.alpha3,
-                                      this.assetEmissionsConnector, 
-                                      true);
+                            case 'asset_cement_emissions.csv':
+                                await AssetEmissionsImporter.Import(
+                                    filePath,
+                                    thisCountry.alpha3,
+                                    this.assetEmissionsConnector,
+                                    false);
                                 break;
-                            case 'country_electricity-generation_emissions.csv':
-                                // await CountryElectricityGenerationEmissionsImporter.Import(filePath,
-                                //  country.alpha3,
-                                //  this.countryElectricityEmissionsConnector);
-                                break;
-                            
+                            // case 'asset_electricity-generation_emissions.csv':
+                            //     await AssetEmissionsImporter.Import(
+                            //         filePath,
+                            //         thisCountry.alpha3,
+                            //         this.assetEmissionsConnector,
+                            //         true);
+                            //     break;
+                            // case 'asset_coal-mining_emissions.csv':
+                            //     await AssetEmissionsImporter.Import(
+                            //         filePath,
+                            //         thisCountry.alpha3,
+                            //         this.assetEmissionsConnector,
+                            //         true,
+                            //         true);
+                            //     break;
+                            // case 'country_electricity-generation_emissions.csv':
+                            //     await CountryElectricityGenerationEmissionsImporter.Import(filePath,
+                            //         thisCountry.alpha3,
+                            //         this.countryElectricityEmissionsConnector);
+                            //     break;
+
                             default:
-                                console.log(`did not import file ${inventory.fileName}`);
+                                // console.log(`did not import file ${thisInventory.fileName}`);
                                 break;
                         }
                     }
-                });
-            });
-        });
+                }
+            }
+        }
 
-        console.log('completed import')
+        // console.log('completed import')
     }
-
-
-
-    
 }
 
 const application = new App();
-application.Start();
-
+(async () => await application.Start())();
+// console.log('completed')
 

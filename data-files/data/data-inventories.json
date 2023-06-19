@@ -22,6 +22,26 @@
         "inventories": [
             {
                 "fileName": "asset_aluminum_emissions.csv"
+            },
+            {
+                "fileName": "asset_cement_emissions.csv"
+            },
+            {
+                "fileName": "asset_steel_emissions.csv"
+            }
+        ]
+    },
+    {
+        "directory": "fossil_fuel_operations",
+        "inventories": [
+            {
+                "fileName": "asset_coal-mining_emissions.csv"
+            },
+            {
+                "fileName": "asset_oil-and-gas-production-and-transport_emissions.csv"
+            },
+            {
+                "fileName": "asset_oil-and-gas-refining_emissions.csv"
             }
         ]
     }
