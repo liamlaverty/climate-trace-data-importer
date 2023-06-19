@@ -229,7 +229,34 @@
     },
     {
         "directory": "transportation",
-        "inventories": []
+        "inventories": [
+            {
+            "fileName": "asset_domestic-aviation_emissions.csv",
+                "csvColumns": [
+                    "asset_id",
+                    "iso3_country",
+                    "original_inventory_sector",
+                    "start_time",
+                    "end_time",
+                    "temporal_granularity",
+                    "gas",
+                    "emissions_quantity",
+                    "emissions_factor",
+                    "emissions_factor_units",
+                    "capacity",
+                    "capacity_units",
+                    "capacity_factor",
+                    "activity",
+                    "activity_units",
+                    "created_date",
+                    "modified_date",
+                    "asset_name",
+                    "asset_type",
+                    "st_astext"
+
+                ]
+            }
+        ]
     },
     {
         "directory": "waste",

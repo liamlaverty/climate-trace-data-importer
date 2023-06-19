@@ -20,7 +20,8 @@ export class AssetEmissionsImporter {
                 if (context.column == 'emissions_quantity' || 
                 context.column == 'emissions_factor' ||
                 context.column == 'capacity' ||
-                context.column == 'capacity_factor' ) {
+                context.column == 'capacity_factor' || 
+                context.column == 'activity' ) {
                     const res = parseInt(columnVal);
                     return isNaN(res) ? 0 : res;
                 }
