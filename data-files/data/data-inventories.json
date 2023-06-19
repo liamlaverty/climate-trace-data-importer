@@ -1,16 +1,34 @@
 [
     {
-        "directory": "power",
+        "directory": "agriculture",
+        "inventories": [
+
+        ]
+    },
+    {
+        "directory": "buildings",
+        "inventories": [
+
+        ]
+    },
+    {
+        "directory": "fluorinated_gases",
+        "inventories": [
+
+        ]
+    },
+    {
+        "directory": "fossil_fuel_operations",
         "inventories": [
             {
-                "fileName": "asset_electricity-generation_emissions.csv",
-                "csvColumns": [
-                    "asset_id",
+                "fileName": "asset_coal-mining_emissions.csv",
+                "csvColumns": ["asset_id",
                     "iso3_country",
                     "original_inventory_sector",
                     "start_time",
                     "end_time",
                     "temporal_granularity",
+                    "lat_lon",
                     "gas",
                     "emissions_quantity",
                     "emissions_factor",
@@ -28,30 +46,48 @@
                 ]
             },
             {
-                "fileName": "asset_electricity-generation_ownership.csv",
+                "fileName": "asset_oil-and-gas-production-and-transport_emissions.csv",
                 "csvColumns": [
                     "asset_id",
-                    "asset_name",
-                    "owner_name",
-                    "owner_classification",
-                    "percentage_of_ownership",
-                    "owner_direct_parent",
-                    "owner_grouping",
-                    "operator_name",
-                    "percentage_of_operation",
-                    "data_source",
-                    "url",
-                    "recency",
+                    "iso3_country",
+                    "original_inventory_sector",
+                    "start_time",
+                    "end_time",
+                    "temporal_granularity",
+                    "gas",
+                    "emissions_quantity",
+                    "emissions_factor",
+                    "emissions_factor_units",
                     "created_date",
-                    "original_inventory_sector"
+                    "modified_date",
+                    "asset_name",
+                    "asset_type",
+                    "st_astext"
+
                 ]
             },
             {
-                "destinationTable": "country_electricity_emissions",
-                "fileName": "country_electricity-generation_emissions.csv"
-            },
-            {
-                "fileName": "country_other-energy-use_emissions.csv"
+                "fileName": "asset_oil-and-gas-refining_emissions.csv",
+                "csvColumns": [
+                    "asset_id",
+                    "iso3_country",
+                    "original_inventory_sector",
+                    "start_time",
+                    "end_time",
+                    "temporal_granularity",
+                    "gas",
+                    "emissions_quantity",
+                    "emissions_factor",
+                    "emissions_factor_units",
+                    "capacity",
+                    "capacity_units",
+                    "capacity_factor",
+                    "created_date",
+                    "modified_date",
+                    "asset_name",
+                    "asset_type",
+                    "st_astext"
+                ]
             }
         ]
     },
@@ -130,17 +166,23 @@
         ]
     },
     {
-        "directory": "fossil_fuel_operations",
+        "directory": "mineral_extraction",
+        "inventories":[
+
+        ]
+    },
+    {
+        "directory": "power",
         "inventories": [
             {
-                "fileName": "asset_coal-mining_emissions.csv",
-                "csvColumns": ["asset_id",
+                "fileName": "asset_electricity-generation_emissions.csv",
+                "csvColumns": [
+                    "asset_id",
                     "iso3_country",
                     "original_inventory_sector",
                     "start_time",
                     "end_time",
                     "temporal_granularity",
-                    "lat_lon",
                     "gas",
                     "emissions_quantity",
                     "emissions_factor",
@@ -158,28 +200,42 @@
                 ]
             },
             {
-                "fileName": "asset_oil-and-gas-production-and-transport_emissions.csv",
+                "fileName": "asset_electricity-generation_ownership.csv",
                 "csvColumns": [
                     "asset_id",
-                    "iso3_country",
-                    "original_inventory_sector",
-                    "start_time",
-                    "end_time",
-                    "temporal_granularity",
-                    "gas",
-                    "emissions_quantity",
-                    "emissions_factor",
-                    "emissions_factor_units",
-                    "created_date",
-                    "modified_date",
                     "asset_name",
-                    "asset_type",
-                    "st_astext"
-
+                    "owner_name",
+                    "owner_classification",
+                    "percentage_of_ownership",
+                    "owner_direct_parent",
+                    "owner_grouping",
+                    "operator_name",
+                    "percentage_of_operation",
+                    "data_source",
+                    "url",
+                    "recency",
+                    "created_date",
+                    "original_inventory_sector"
                 ]
             },
             {
-                "fileName": "asset_oil-and-gas-refining_emissions.csv",
+                "destinationTable": "country_electricity_emissions",
+                "fileName": "country_electricity-generation_emissions.csv"
+            },
+            {
+                "fileName": "country_other-energy-use_emissions.csv"
+            }
+        ]
+    },
+    {
+        "directory": "transportation",
+        "inventories": []
+    },
+    {
+        "directory": "waste",
+        "inventories":[
+            {
+                "fileName": "asset_solid-waste-disposal_emissions.csv",
                 "csvColumns": [
                     "asset_id",
                     "iso3_country",
@@ -194,6 +250,8 @@
                     "capacity",
                     "capacity_units",
                     "capacity_factor",
+                    "activity",
+                    "activity_units",
                     "created_date",
                     "modified_date",
                     "asset_name",
@@ -203,4 +261,6 @@
             }
         ]
     }
+    
+
 ]
