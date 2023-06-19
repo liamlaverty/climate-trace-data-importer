@@ -35,13 +35,73 @@
         "directory": "fossil_fuel_operations",
         "inventories": [
             {
-                "fileName": "asset_coal-mining_emissions.csv"
+                "fileName": "asset_coal-mining_emissions.csv",
+                "csvColumns": ["asset_id",
+                    "iso3_country",
+                    "original_inventory_sector",
+                    "start_time",
+                    "end_time",
+                    "temporal_granularity",
+                    "lat_lon",
+                    "gas",
+                    "emissions_quantity",
+                    "emissions_factor",
+                    "emissions_factor_units",
+                    "capacity",
+                    "capacity_units",
+                    "capacity_factor",
+                    "activity",
+                    "activity_units",
+                    "created_date",
+                    "modified_date",
+                    "asset_name",
+                    "asset_type",
+                    "st_astext"
+                ]
             },
             {
-                "fileName": "asset_oil-and-gas-production-and-transport_emissions.csv"
+                "fileName": "asset_oil-and-gas-production-and-transport_emissions.csv",
+                "csvColumns": [
+                    "asset_id",
+                    "iso3_country",
+                    "original_inventory_sector",
+                    "start_time",
+                    "end_time",
+                    "temporal_granularity",
+                    "gas",
+                    "emissions_quantity",
+                    "emissions_factor",
+                    "emissions_factor_units",
+                    "created_date",
+                    "modified_date",
+                    "asset_name",
+                    "asset_type",
+                    "st_astext"
+
+                ]
             },
             {
-                "fileName": "asset_oil-and-gas-refining_emissions.csv"
+                "fileName": "asset_oil-and-gas-refining_emissions.csv",
+                "csvColumns": [
+                    "asset_id",
+                    "iso3_country",
+                    "original_inventory_sector",
+                    "start_time",
+                    "end_time",
+                    "temporal_granularity",
+                    "gas",
+                    "emissions_quantity",
+                    "emissions_factor",
+                    "emissions_factor_units",
+                    "capacity",
+                    "capacity_units",
+                    "capacity_factor",
+                    "created_date",
+                    "modified_date",
+                    "asset_name",
+                    "asset_type",
+                    "st_astext"
+                ]
             }
         ]
     }

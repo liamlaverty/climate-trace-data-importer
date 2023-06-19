@@ -14,4 +14,5 @@ export class DataInventory {
 export class DataInventoryItem{
     destinationTable: string;
     fileName: string;
+    csvColumns: string[];
 }

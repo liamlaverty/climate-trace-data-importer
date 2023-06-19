@@ -91,20 +91,26 @@ class App {
                         console.log(`${thisCountry.alpha3}: file at path did not exist: '${filePath}'`);
                     } else {
                         switch (thisInventory.fileName) {
-                            case 'asset_aluminum_emissions.csv':
-                                await AssetEmissionsImporter.Import(
-                                    filePath,
-                                    thisCountry.alpha3,
-                                    this.assetEmissionsConnector,
-                                    false);
-                                break;
-                            case 'asset_cement_emissions.csv':
-                                await AssetEmissionsImporter.Import(
-                                    filePath,
-                                    thisCountry.alpha3,
-                                    this.assetEmissionsConnector,
-                                    false);
-                                break;
+                            // case 'country_electricity-generation_emissions.csv':
+                            //     await CountryElectricityGenerationEmissionsImporter.Import(filePath,
+                            //         thisCountry.alpha3,
+                            //         this.countryElectricityEmissionsConnector);
+                            //     break;
+
+                            // case 'asset_aluminum_emissions.csv':
+                            //     await AssetEmissionsImporter.Import(
+                            //         filePath,
+                            //         thisCountry.alpha3,
+                            //         this.assetEmissionsConnector,
+                            //         false);
+                            //     break;
+                            // case 'asset_cement_emissions.csv':
+                            //     await AssetEmissionsImporter.Import(
+                            //         filePath,
+                            //         thisCountry.alpha3,
+                            //         this.assetEmissionsConnector,
+                            //         false);
+                            //     break;
                             // case 'asset_electricity-generation_emissions.csv':
                             //     await AssetEmissionsImporter.Import(
                             //         filePath,
@@ -117,15 +123,26 @@ class App {
                             //         filePath,
                             //         thisCountry.alpha3,
                             //         this.assetEmissionsConnector,
-                            //         true,
-                            //         true);
+                            //         thisInventory.csvColumns);
                             //     break;
-                            // case 'country_electricity-generation_emissions.csv':
-                            //     await CountryElectricityGenerationEmissionsImporter.Import(filePath,
+                            
+                            // case 'asset_oil-and-gas-refining_emissions.csv':
+                            //     await AssetEmissionsImporter.Import(
+                            //         filePath,
                             //         thisCountry.alpha3,
-                            //         this.countryElectricityEmissionsConnector);
+                            //         this.assetEmissionsConnector,
+                            //         thisInventory.csvColumns);
                             //     break;
 
+
+                            case 'asset_oil-and-gas-production-and-transport_emissions.csv':
+                                // ERRORS EXPECTING 15 COLS
+                                await AssetEmissionsImporter.Import(
+                                    filePath,
+                                    thisCountry.alpha3,
+                                    this.assetEmissionsConnector,
+                                    thisInventory.csvColumns);
+                                break;
                             default:
                                 // console.log(`did not import file ${thisInventory.fileName}`);
                                 break;

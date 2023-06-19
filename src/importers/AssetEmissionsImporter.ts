@@ -6,41 +6,14 @@ import { AssetEmissions } from '../models/db-models/AssetEmissions.js';
 
 export class AssetEmissionsImporter {
     static Import = async(filePath: string, countryAlpha3: string, dbConn: AssetEmissionsConnector, 
-        includeActivityColumns: Boolean = false, includeLatLonColumns: Boolean = false) => {
+        csvColumns: string[]
+        ) => {
         console.log(`opening: ${filePath}`);
         const fileContents = fs.readFileSync(filePath, 'utf-8');
 
-        const tableColumns = [
-            'asset_id',
-            'iso3_country',
-            'original_inventory_sector',
-            'start_time',
-            'end_time',
-            'temporal_granularity',
-            'gas',
-            'emissions_quantity',
-            'emissions_factor',
-            'emissions_factor_units',
-            'capacity',
-            'capacity_units',
-            'capacity_factor',
-            'created_date',
-            'modified_date',
-            'asset_name',
-            'asset_type',
-            'st_astext',       
-        ];
-        if (includeActivityColumns){
-            // some csv sets don't include this data, others do
-            tableColumns.splice(13, 0, 'activity','activity_units')
-        }
-        if (includeLatLonColumns) {
-            tableColumns.splice(6, 0, 'Lat_lon')
-        }
-
         parse(fileContents, {
             delimiter: ',',
-            columns: tableColumns,
+            columns: csvColumns,
             fromLine: 2,
             cast: (columnVal, context) => {
                 if (context.column == 'emissions_quantity' || 
@@ -61,7 +34,7 @@ export class AssetEmissionsImporter {
                 try {
                     const insResult = await dbConn.insert(result[i], null);
                 } catch (er) {
-                    console.error(`Err in ${countryAlpha3} on csv-line ${i}: "${er}. Data: ${result[i]}"`);
+                    console.error(`Err in ${countryAlpha3} on csv-line ${i}: "${er}. Data: ${JSON.stringify(result[i])}"`);
                 }
             }
         });
