@@ -44,9 +44,51 @@ class App {
         this.SetCountryList();
         this.SetInventoryList();
 
-        console.log('importing data');
-        await this.ImportData();
-        console.log('completed importing data');
+        await this.BuildDataInventoriesJsonFile();
+
+        // console.log('importing data');
+        // await this.ImportData();
+        // console.log('completed importing data');
+
+    }
+
+    /* 
+    * Builds a data inventory json file
+    * 
+    * 
+    */
+    private BuildDataInventoriesJsonFile() {
+        const jsonObj = new Array<DataInventory>();
+        for (var c = 0; c < this.countryList.length; c++) {
+            const thisCountry = this.countryList[c];
+            const filePath = path.resolve(this.filePathAbs, `./climate_trace/country_packages/non_forest_sectors/${thisCountry.alpha3}`);
+
+            // list each directory
+            fs.readdir(filePath, (err, directories) => {
+                directories.forEach(dir => {
+                    if (fs.lstatSync(path.resolve(filePath, dir)).isDirectory()) {
+                        // console.log(`found ${thisCountry.alpha3}->${dir}`);
+
+                        let isUnique = true;
+                        for (var i = 0; i < jsonObj.length; i++) {
+                            if (jsonObj[i].directory === dir) {
+                                isUnique = false;
+                                break;
+                            }
+                        }
+                        if (isUnique) {
+                            const newObj = <DataInventory>({
+                                inventories: [],
+                                directory: dir
+                            });
+                            jsonObj.push(newObj);
+                        }
+                    }
+                })
+            })
+            // if the directory isn't already in the json output, 
+        }
+        console.log(JSON.stringify(jsonObj));
 
     }
 
