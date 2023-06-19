@@ -158,7 +158,14 @@ class App {
                             //         thisInventory.csvColumns);
                             //     break;
 
-                            case 'asset_domestic-aviation_emissions.csv':
+                            // case 'asset_domestic-aviation_emissions.csv':
+                            //     await AssetEmissionsImporter.Import(
+                            //         filePath,
+                            //         thisCountry.alpha3,
+                            //         this.assetEmissionsConnector,
+                            //         thisInventory.csvColumns);
+                            //     break;
+                            case 'asset_international-aviation_emissions.csv':
                                 await AssetEmissionsImporter.Import(
                                     filePath,
                                     thisCountry.alpha3,
