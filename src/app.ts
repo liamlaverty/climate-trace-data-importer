@@ -165,13 +165,30 @@ class App {
                             //         this.assetEmissionsConnector,
                             //         thisInventory.csvColumns);
                             //     break;
-                            case 'asset_international-aviation_emissions.csv':
-                                await AssetEmissionsImporter.Import(
-                                    filePath,
-                                    thisCountry.alpha3,
-                                    this.assetEmissionsConnector,
-                                    thisInventory.csvColumns);
+                            // case 'asset_international-aviation_emissions.csv':
+                            //     await AssetEmissionsImporter.Import(
+                            //         filePath,
+                            //         thisCountry.alpha3,
+                            //         this.assetEmissionsConnector,
+                            //         thisInventory.csvColumns);
+                            //     break;
+                            case 'asset_road-transportation_emissions.csv':
+                                console.warn(`skipped road transport emissions for country ${thisCountry} (geodata not implemented)`)
+                                // await AssetEmissionsImporter.Import(
+                                //     filePath,
+                                //     thisCountry.alpha3,
+                                //     this.assetEmissionsConnector,
+                                //     thisInventory.csvColumns);
                                 break;
+                            case 'asset_shipping_emissions.csv':
+                                console.warn(`skipped shipping transport emissions for country ${thisCountry} (geodata not implemented)`)
+                                // await AssetEmissionsImporter.Import(
+                                //     filePath,
+                                //     thisCountry.alpha3,
+                                //     this.assetEmissionsConnector,
+                                //     thisInventory.csvColumns);
+                                break;
+                           
                             default:
                                 // console.log(`did not import file ${thisInventory.fileName}`);
                                 break;
