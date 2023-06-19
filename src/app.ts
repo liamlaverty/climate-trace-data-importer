@@ -86,13 +86,23 @@ class App {
                     } else {
                         switch (inventory.fileName) {
                             case 'asset_aluminum_emissions.csv':
-                                // await AssetEmissionsImporter.Import(filePath, country.alpha3, this.assetEmissionsConnector);
+                                await AssetEmissionsImporter.Import(
+                                    filePath, 
+                                    country.alpha3, 
+                                    this.assetEmissionsConnector,
+                                    false);
                                 break;
                             case 'asset_electricity-generation_emissions.csv':
-                                await AssetEmissionsImporter.Import(filePath, country.alpha3, this.assetEmissionsConnector);
+                                 await AssetEmissionsImporter.Import(
+                                     filePath,
+                                      country.alpha3,
+                                      this.assetEmissionsConnector, 
+                                      true);
                                 break;
                             case 'country_electricity-generation_emissions.csv':
-                                // await CountryElectricityGenerationEmissionsImporter.Import(filePath, country.alpha3, this.countryElectricityEmissionsConnector);
+                                // await CountryElectricityGenerationEmissionsImporter.Import(filePath,
+                                //  country.alpha3,
+                                //  this.countryElectricityEmissionsConnector);
                                 break;
                             
                             default:

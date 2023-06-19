@@ -5,33 +5,40 @@ import { AssetEmissions } from '../models/db-models/AssetEmissions.js';
 
 
 export class AssetEmissionsImporter {
-    static Import = async(filePath: string, countryAlpha3: string, dbConn: AssetEmissionsConnector) => {
+    static Import = async(filePath: string, countryAlpha3: string, dbConn: AssetEmissionsConnector, includeActivityColumns: Boolean = false) => {
         console.log(`opening: ${filePath}`);
         const fileContents = fs.readFileSync(filePath, 'utf-8');
+
+        const tableColumns = [
+            'asset_id',
+            'iso3_country',
+            'original_inventory_sector',
+            'start_time',
+            'end_time',
+            'temporal_granularity',
+            'gas',
+            'emissions_quantity',
+            'emissions_factor',
+            'emissions_factor_units',
+            'capacity',
+            'capacity_units',
+            'capacity_factor',
+            'created_date',
+            'modified_date',
+            'asset_name',
+            'asset_type',
+            'st_astext',       
+        ];
+        if (includeActivityColumns){
+            // some csv sets don't include this data, others do
+            // 
+            tableColumns.splice(13, 0, 'activity','activity_units'
+            )
+        }
+
         parse(fileContents, {
             delimiter: ',',
-            columns: [
-               'asset_id',
-               'iso3_country',
-               'original_inventory_sector',
-               'start_time',
-               'end_time',
-               'temporal_granularity',
-               'gas',
-               'emissions_quantity',
-               'emissions_factor',
-               'emissions_factor_units',
-               'capacity',
-               'capacity_units',
-               'capacity_factor',
-            //    'activity',
-            //    'activity_units',
-               'created_date',
-               'modified_date',
-               'asset_name',
-               'asset_type',
-               'st_astext',                
-            ],
+            columns: tableColumns,
             fromLine: 2,
             cast: (columnVal, context) => {
                 if (context.column == 'emissions_quantity' || 
