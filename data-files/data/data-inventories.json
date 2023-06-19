@@ -3,10 +3,48 @@
         "directory": "power",
         "inventories": [
             {
-                "fileName": "asset_electricity-generation_emissions.csv"
+                "fileName": "asset_electricity-generation_emissions.csv",
+                "csvColumns": [
+                    "asset_id",
+                    "iso3_country",
+                    "original_inventory_sector",
+                    "start_time",
+                    "end_time",
+                    "temporal_granularity",
+                    "gas",
+                    "emissions_quantity",
+                    "emissions_factor",
+                    "emissions_factor_units",
+                    "capacity",
+                    "capacity_units",
+                    "capacity_factor",
+                    "activity",
+                    "activity_units",
+                    "created_date",
+                    "modified_date",
+                    "asset_name",
+                    "asset_type",
+                    "st_astext"
+                ]
             },
             {
-                "fileName": "asset_electricity-generation_ownership.csv"
+                "fileName": "asset_electricity-generation_ownership.csv",
+                "csvColumns": [
+                    "asset_id",
+                    "asset_name",
+                    "owner_name",
+                    "owner_classification",
+                    "percentage_of_ownership",
+                    "owner_direct_parent",
+                    "owner_grouping",
+                    "operator_name",
+                    "percentage_of_operation",
+                    "data_source",
+                    "url",
+                    "recency",
+                    "created_date",
+                    "original_inventory_sector"
+                ]
             },
             {
                 "destinationTable": "country_electricity_emissions",
@@ -21,13 +59,73 @@
         "directory": "manufacturing",
         "inventories": [
             {
-                "fileName": "asset_aluminum_emissions.csv"
+                "fileName": "asset_aluminum_emissions.csv",
+                "csvColumns": [
+                    "asset_id",
+                    "iso3_country",
+                    "original_inventory_sector",
+                    "start_time",
+                    "end_time",
+                    "temporal_granularity",
+                    "gas",
+                    "emissions_quantity",
+                    "emissions_factor",
+                    "emissions_factor_units",
+                    "capacity",
+                    "capacity_units",
+                    "capacity_factor",
+                    "created_date",
+                    "modified_date",
+                    "asset_name",
+                    "asset_type",
+                    "st_astext"
+                ]
             },
             {
-                "fileName": "asset_cement_emissions.csv"
+                "fileName": "asset_cement_emissions.csv",
+                "csvColumns": [
+                    "asset_id",
+                    "iso3_country",
+                    "original_inventory_sector",
+                    "start_time",
+                    "end_time",
+                    "temporal_granularity",
+                    "gas",
+                    "emissions_quantity",
+                    "emissions_factor",
+                    "emissions_factor_units",
+                    "capacity",
+                    "capacity_units",
+                    "capacity_factor",
+                    "created_date",
+                    "modified_date",
+                    "asset_name",
+                    "asset_type",
+                    "st_astext"
+                ]
             },
             {
-                "fileName": "asset_steel_emissions.csv"
+                "fileName": "asset_steel_emissions.csv",
+                "csvColumns": [
+                    "asset_id",
+                    "iso3_country",
+                    "original_inventory_sector",
+                    "start_time",
+                    "end_time",
+                    "temporal_granularity",
+                    "gas",
+                    "emissions_quantity",
+                    "emissions_factor",
+                    "emissions_factor_units",
+                    "capacity",
+                    "capacity_units",
+                    "capacity_factor",
+                    "created_date",
+                    "modified_date",
+                    "asset_name",
+                    "asset_type",
+                    "st_astext"
+                ]
             }
         ]
     },

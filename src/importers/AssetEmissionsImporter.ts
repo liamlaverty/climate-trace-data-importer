@@ -15,6 +15,7 @@ export class AssetEmissionsImporter {
             delimiter: ',',
             columns: csvColumns,
             fromLine: 2,
+            toLine: 202,
             cast: (columnVal, context) => {
                 if (context.column == 'emissions_quantity' || 
                 context.column == 'emissions_factor' ||

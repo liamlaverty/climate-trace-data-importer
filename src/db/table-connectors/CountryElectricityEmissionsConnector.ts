@@ -66,7 +66,7 @@ export class CountryElectricityEmissionsConnector {
                 dateNow
             ]
         }
-        console.log(query);
+        // console.log(query);
         return await this.database.insert(query, callback);
     }
     
