@@ -3,7 +3,6 @@ import { parse } from 'csv-parse';
 import { CountryElectricityEmissions } from '../models/db-models/CountryElectricityEmissions.js';
 import { CountryElectricityEmissionsConnector } from '../db/table-connectors/CountryElectricityEmissionsConnector.js';
 
-
 export class CountryElectricityGenerationEmissionsImporter {
 
     static Import = async(filePath: string, countryAlpha3: string, dbConn: CountryElectricityEmissionsConnector) => {

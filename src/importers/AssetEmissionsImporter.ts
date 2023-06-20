@@ -1,14 +1,13 @@
 import * as fs from 'fs';
-import { parse } from 'csv-parse';
+import { CsvError, parse } from 'csv-parse';
 import { AssetEmissionsConnector } from '../db/table-connectors/AssetEmissionsConnector.js';
 import { AssetEmissions } from '../models/db-models/AssetEmissions.js';
 
 
 export class AssetEmissionsImporter {
-    static Import = async(filePath: string, countryAlpha3: string, dbConn: AssetEmissionsConnector, 
-        csvColumns: string[]
-        ) => {
-        console.log(`opening: ${filePath}`);
+    static Import (filePath: string, countryAlpha3: string, dbConn: AssetEmissionsConnector, 
+        csvColumns: string[]) {
+        console.log(`opening: ${countryAlpha3} - ${filePath}`);
         const fileContents = fs.readFileSync(filePath, 'utf-8');
 
         parse(fileContents, {
@@ -27,14 +26,14 @@ export class AssetEmissionsImporter {
                 }
                 else { return columnVal; }
             }
-        }, async (error, result: AssetEmissions[]) => {
+        }, (error: CsvError, result: AssetEmissions[]) => {
             if (error) {
                 console.error(`error reading ${filePath}` + error);
             }
             // console.log(result);
             for (var i = 0; i < result.length; i++) {
                 try {
-                    const insResult = await dbConn.insert(result[i], null);
+                    const insResult = dbConn.insert(result[i], null);
                 } catch (er) {
                     console.error(`Err in ${countryAlpha3} on csv-line ${i}: "${er}. Data: ${JSON.stringify(result[i])}"`);
                 }
