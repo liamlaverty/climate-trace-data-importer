@@ -1,7 +1,7 @@
 import { CountryElectricityEmissions } from "../../models/db-models/CountryElectricityEmissions.js";
 import { DbConnector } from "../DbConnector.js";
 
-export class CountryElectricityEmissionsConnector {
+export class CountryEmissionsConnector {
     database: DbConnector;
     /**
      *

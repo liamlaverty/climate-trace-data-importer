@@ -1,11 +1,11 @@
 import * as fs from 'fs';
 import { parse } from 'csv-parse';
 import { CountryElectricityEmissions } from '../models/db-models/CountryElectricityEmissions.js';
-import { CountryElectricityEmissionsConnector } from '../db/table-connectors/CountryElectricityEmissionsConnector.js';
+import { CountryEmissionsConnector } from '../db/table-connectors/CountryElectricityEmissionsConnector.js';
 
-export class CountryElectricityGenerationEmissionsImporter {
+export class CountryEmissionsImporter {
 
-    static Import = async(filePath: string, countryAlpha3: string, dbConn: CountryElectricityEmissionsConnector) => {
+    static Import = async(filePath: string, countryAlpha3: string, dbConn: CountryEmissionsConnector) => {
         console.log(`opening: ${filePath}`);
         const fileContents = fs.readFileSync(filePath, 'utf-8');
         parse(fileContents, {

@@ -13,10 +13,10 @@ import * as fs from 'fs';
 import { parse } from 'csv-parse';
 
 import * as readLine from 'readline';
-import { CountryElectricityEmissionsConnector } from './db/table-connectors/CountryElectricityEmissionsConnector.js';
+import { CountryEmissionsConnector } from './db/table-connectors/CountryElectricityEmissionsConnector.js';
 import { AssetEmissionsConnector } from './db/table-connectors/AssetEmissionsConnector.js';
 import { AssetEmissionsImporter } from './importers/AssetEmissionsImporter.js';
-import { CountryElectricityGenerationEmissionsImporter } from './importers/CountryElectricityGenerationEmissionsImporter.js';
+import { CountryEmissionsImporter } from './importers/CountryElectricityGenerationEmissionsImporter.js';
 
 class App {
     filePathAbs: string;
@@ -25,7 +25,7 @@ class App {
     inventoryList: [];
     __filename;
     __dirname;
-    countryElectricityEmissionsConnector: CountryElectricityEmissionsConnector;
+    countryElectricityEmissionsConnector: CountryEmissionsConnector;
     assetEmissionsConnector: AssetEmissionsConnector;
     /**
      *
@@ -41,7 +41,7 @@ class App {
     public Start = async () => {
         console.log('starting, setting up data');
         this.db = new DbConnector();
-        this.countryElectricityEmissionsConnector = new CountryElectricityEmissionsConnector(this.db);
+        this.countryElectricityEmissionsConnector = new CountryEmissionsConnector(this.db);
         this.assetEmissionsConnector = new AssetEmissionsConnector(this.db);
 
         this.SetCountryList();
@@ -158,7 +158,10 @@ class App {
 
         for (var c = 0; c < this.countryList.length; c++) {
             const thisCountry = this.countryList[c];
-            if (thisCountry.alpha3 !== "GBR" && thisCountry.alpha3 !== "AFG") { continue; }
+            if (thisCountry.alpha3 !== "GBR")// && thisCountry.alpha3 !== "AFG") 
+            { 
+                continue; 
+            }
 
             for (var il = 0; il < this.inventoryList.length; il++) {
                 const thisInventoryList: DataInventory = this.inventoryList[il];
@@ -171,145 +174,128 @@ class App {
                         console.log(`${thisCountry.alpha3}: file at path did not exist: '${filePath}'`);
                     } else {
                         switch (thisInventory.fileName) {
-                            case 'asset_cropland-fires_emissions.csv':
-                                AssetEmissionsImporter.Import(
-                                    filePath,
-                                    thisCountry.alpha3,
-                                    this.assetEmissionsConnector,
-                                    thisInventory.csvColumns);
-                                break;
-                            case 'asset_enteric-fermentation_emissions.csv':
-                                AssetEmissionsImporter.Import(
-                                    filePath,
-                                    thisCountry.alpha3,
-                                    this.assetEmissionsConnector,
-                                    thisInventory.csvColumns);
-                                break;
-                            
-                            case 'asset_manure-management_emissions.csv':
-                                AssetEmissionsImporter.Import(
-                                    filePath,
-                                    thisCountry.alpha3,
-                                    this.assetEmissionsConnector,
-                                    thisInventory.csvColumns);
-                                break;
-                            case 'asset_synthetic-fertilizer-application-top500_emissions.csv':
-                                console.warn(`skipped asset_synthetic-fertilizer-application-top500_emissions for country ${thisCountry.alpha3} (enormous strings in CAN)`)
-                                // AssetEmissionsImporter.Import(
-                                //     filePath,
-                                //     thisCountry.alpha3,
-                                //     this.assetEmissionsConnector,
-                                //     thisInventory.csvColumns);
-                                break;
-                            case 'asset_rice-cultivation-top500_emissions.csv':
-                                console.warn(`skipped asset_rice-cultivation-top500_emissions for country ${thisCountry.alpha3} (enormous files)`)
-                                // AssetEmissionsImporter.Import(
-                                //     filePath,
-                                //     thisCountry.alpha3,
-                                //     this.assetEmissionsConnector,
-                                //     thisInventory.csvColumns);
-                                break;
-                            
-
-                             case 'asset_aluminum_emissions.csv':
-                                 AssetEmissionsImporter.Import(
-                                     filePath,
-                                     thisCountry.alpha3,
-                                     this.assetEmissionsConnector,
-                                     thisInventory.csvColumns);
-                                 break;
-                             case 'asset_cement_emissions.csv':
-                                 AssetEmissionsImporter.Import(
-                                     filePath,
-                                     thisCountry.alpha3,
-                                     this.assetEmissionsConnector,
-                                     thisInventory.csvColumns);
-                                 break;
-                             case 'asset_electricity-generation_emissions.csv':
-                                 AssetEmissionsImporter.Import(
-                                     filePath,
-                                     thisCountry.alpha3,
-                                     this.assetEmissionsConnector,
-                                     thisInventory.csvColumns);
-                                 break;
-                             case 'asset_coal-mining_emissions.csv':
-                                 AssetEmissionsImporter.Import(
-                                     filePath,
-                                     thisCountry.alpha3,
-                                     this.assetEmissionsConnector,
-                                     thisInventory.csvColumns);
-                                 break;
-                            case 'asset_steel_emissions.csv':
-                               AssetEmissionsImporter.Import(
-                                   filePath,
-                                   thisCountry.alpha3,
-                                   this.assetEmissionsConnector,
-                                   thisInventory.csvColumns);
-                               break;
-
-                             case 'asset_oil-and-gas-refining_emissions.csv':
-                                 AssetEmissionsImporter.Import(
-                                     filePath,
-                                     thisCountry.alpha3,
-                                     this.assetEmissionsConnector,
-                                     thisInventory.csvColumns);
-                                 break;
-
-
-                             case 'asset_oil-and-gas-production-and-transport_emissions.csv':
-                                 AssetEmissionsImporter.Import(
-                                     filePath,
-                                     thisCountry.alpha3,
-                                     this.assetEmissionsConnector,
-                                     thisInventory.csvColumns);
-                                 break;
-
-                            case 'asset_solid-waste-disposal_emissions.csv':
-                                AssetEmissionsImporter.Import(
-                                    filePath,
-                                    thisCountry.alpha3,
-                                    this.assetEmissionsConnector,
-                                    thisInventory.csvColumns);
-                                break;
-
-                            case 'asset_domestic-aviation_emissions.csv':
-                                AssetEmissionsImporter.Import(
-                                    filePath,
-                                    thisCountry.alpha3,
-                                    this.assetEmissionsConnector,
-                                    thisInventory.csvColumns);
-                                break;
-                            case 'asset_international-aviation_emissions.csv':
-                                AssetEmissionsImporter.Import(
-                                    filePath,
-                                    thisCountry.alpha3,
-                                    this.assetEmissionsConnector,
-                                    thisInventory.csvColumns);
-                                break;
-                            case 'asset_road-transportation_emissions.csv':
-                                console.warn(`skipped road transport emissions for country ${thisCountry.alpha3} (geodata not implemented)`)
-                                // AssetEmissionsImporter.Import(
-                                //     filePath,
-                                //     thisCountry.alpha3,
-                                //     this.assetEmissionsConnector,
-                                //     thisInventory.csvColumns);
-                                break;
-                            case 'asset_shipping_emissions.csv':
-                                console.warn(`skipped shipping transport emissions for country ${thisCountry.alpha3} (geodata not implemented)`)
-                                // AssetEmissionsImporter.Import(
-                                //     filePath,
-                                //     thisCountry.alpha3,
-                                //     this.assetEmissionsConnector,
-                                //     thisInventory.csvColumns);
-                                break;
 
                             case 'country_electricity-generation_emissions.csv':
-                                CountryElectricityGenerationEmissionsImporter.Import(filePath,
+                                CountryEmissionsImporter.Import(filePath,
                                     thisCountry.alpha3,
                                     this.countryElectricityEmissionsConnector);
                                 break;
+
+                            // case 'asset_cropland-fires_emissions.csv':
+                            //     AssetEmissionsImporter.Import(
+                            //         filePath,
+                            //         thisCountry.alpha3,
+                            //         this.assetEmissionsConnector,
+                            //         thisInventory.csvColumns);
+                            //     break;
+                            // case 'asset_enteric-fermentation_emissions.csv':
+                            //     AssetEmissionsImporter.Import(
+                            //         filePath,
+                            //         thisCountry.alpha3,
+                            //         this.assetEmissionsConnector,
+                            //         thisInventory.csvColumns);
+                            //     break;
+                            
+                            // case 'asset_manure-management_emissions.csv':
+                            //     AssetEmissionsImporter.Import(
+                            //         filePath,
+                            //         thisCountry.alpha3,
+                            //         this.assetEmissionsConnector,
+                            //         thisInventory.csvColumns);
+                            //     break;
+                            // case 'asset_synthetic-fertilizer-application-top500_emissions.csv':
+                            //     console.warn(`skipped asset_synthetic-fertilizer-application-top500_emissions for country ${thisCountry.alpha3} (enormous strings in CAN)`)
+                            //     break;
+                            // case 'asset_rice-cultivation-top500_emissions.csv':
+                            //     console.warn(`skipped asset_rice-cultivation-top500_emissions for country ${thisCountry.alpha3} (enormous files)`)
+                            //     break;
+                            
+
+                            //  case 'asset_aluminum_emissions.csv':
+                            //      AssetEmissionsImporter.Import(
+                            //          filePath,
+                            //          thisCountry.alpha3,
+                            //          this.assetEmissionsConnector,
+                            //          thisInventory.csvColumns);
+                            //      break;
+                            //  case 'asset_cement_emissions.csv':
+                            //      AssetEmissionsImporter.Import(
+                            //          filePath,
+                            //          thisCountry.alpha3,
+                            //          this.assetEmissionsConnector,
+                            //          thisInventory.csvColumns);
+                            //      break;
+                            //  case 'asset_electricity-generation_emissions.csv':
+                            //      AssetEmissionsImporter.Import(
+                            //          filePath,
+                            //          thisCountry.alpha3,
+                            //          this.assetEmissionsConnector,
+                            //          thisInventory.csvColumns);
+                            //      break;
+                            //  case 'asset_coal-mining_emissions.csv':
+                            //      AssetEmissionsImporter.Import(
+                            //          filePath,
+                            //          thisCountry.alpha3,
+                            //          this.assetEmissionsConnector,
+                            //          thisInventory.csvColumns);
+                            //      break;
+                            // case 'asset_steel_emissions.csv':
+                            //    AssetEmissionsImporter.Import(
+                            //        filePath,
+                            //        thisCountry.alpha3,
+                            //        this.assetEmissionsConnector,
+                            //        thisInventory.csvColumns);
+                            //    break;
+
+                            //  case 'asset_oil-and-gas-refining_emissions.csv':
+                            //      AssetEmissionsImporter.Import(
+                            //          filePath,
+                            //          thisCountry.alpha3,
+                            //          this.assetEmissionsConnector,
+                            //          thisInventory.csvColumns);
+                            //      break;
+
+
+                            //  case 'asset_oil-and-gas-production-and-transport_emissions.csv':
+                            //      AssetEmissionsImporter.Import(
+                            //          filePath,
+                            //          thisCountry.alpha3,
+                            //          this.assetEmissionsConnector,
+                            //          thisInventory.csvColumns);
+                            //      break;
+
+                            // case 'asset_solid-waste-disposal_emissions.csv':
+                            //     AssetEmissionsImporter.Import(
+                            //         filePath,
+                            //         thisCountry.alpha3,
+                            //         this.assetEmissionsConnector,
+                            //         thisInventory.csvColumns);
+                            //     break;
+
+                            // case 'asset_domestic-aviation_emissions.csv':
+                            //     AssetEmissionsImporter.Import(
+                            //         filePath,
+                            //         thisCountry.alpha3,
+                            //         this.assetEmissionsConnector,
+                            //         thisInventory.csvColumns);
+                            //     break;
+                            // case 'asset_international-aviation_emissions.csv':
+                            //     AssetEmissionsImporter.Import(
+                            //         filePath,
+                            //         thisCountry.alpha3,
+                            //         this.assetEmissionsConnector,
+                            //         thisInventory.csvColumns);
+                            //     break;
+                            // case 'asset_road-transportation_emissions.csv':
+                            //     console.warn(`skipped road transport emissions for country ${thisCountry.alpha3} (geodata not implemented)`)
+                            //     break;
+                            // case 'asset_shipping_emissions.csv':
+                            //     console.warn(`skipped shipping transport emissions for country ${thisCountry.alpha3} (geodata not implemented)`)
+                            //     break;
+
+
                             default:
-                                console.log(`did not import file ${thisInventory.fileName}`);
+                                // console.log(`did not import file ${thisInventory.fileName}`);
                                 break;
                         }
                     }
