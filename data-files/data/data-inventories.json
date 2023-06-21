@@ -50,7 +50,6 @@
                     "asset_name",
                     "asset_type",
                     "st_astext"
-
                 ]
             },
             {
@@ -77,32 +76,97 @@
                     "asset_name",
                     "asset_type",
                     "st_astext"
-
                 ]
             },
             {
                 "fileName": "country_cropland-fires_emissions.csv",
-                "csvColumns": []
+                "csvColumns": [
+                    "iso3_country",
+                    "start_time",
+                    "end_time",
+                    "original_inventory_sector",
+                    "gas",
+                    "emissions_quantity",
+                    "emissions_quantity_units",
+                    "temporal_granularity",
+                    "created_date",
+                    "modified_date"
+                ]
             },
             {
                 "fileName": "country_enteric-fermentation_emissions.csv",
-                "csvColumns": []
+                "csvColumns": [
+                    "iso3_country",
+                    "start_time",
+                    "end_time",
+                    "original_inventory_sector",
+                    "gas",
+                    "emissions_quantity",
+                    "emissions_quantity_units",
+                    "temporal_granularity",
+                    "created_date",
+                    "modified_date"
+                ]
             },
             {
                 "fileName": "country_manure-management_emissions.csv",
-                "csvColumns": []
+                "csvColumns": [
+                    "iso3_country",
+                    "start_time",
+                    "end_time",
+                    "original_inventory_sector",
+                    "gas",
+                    "emissions_quantity",
+                    "emissions_quantity_units",
+                    "temporal_granularity",
+                    "created_date",
+                    "modified_date"
+                ]
             },
             {
                 "fileName": "country_other-agricultural-soil-emissions_emissions.csv",
-                "csvColumns": []
+                "csvColumns": [
+                    "iso3_country",
+                    "start_time",
+                    "end_time",
+                    "original_inventory_sector",
+                    "gas",
+                    "emissions_quantity",
+                    "emissions_quantity_units",
+                    "temporal_granularity",
+                    "created_date",
+                    "modified_date"
+                ]
             },
             {
                 "fileName": "country_rice-cultivation_emissions.csv",
-                "csvColumns": []
+                "csvColumns": [
+                    "iso3_country",
+                    "start_time",
+                    "end_time",
+                    "original_inventory_sector",
+                    "gas",
+                    "emissions_quantity",
+                    "emissions_quantity_units",
+                    "temporal_granularity",
+                    "created_date",
+                    "modified_date"
+                ]
             },
             {
                 "fileName": "country_synthetic-fertilizer-application_emissions.csv",
-                "csvColumns": []
+                "csvColumns": [
+                    "iso3_country",
+                    "start_time",
+                    "end_time",
+                    "original_inventory_sector",
+                    "gas",
+                    "emissions_quantity",
+                    "emissions_quantity_units",
+                    "temporal_granularity",
+                    "created_date",
+                    "modified_date"
+                ]
             },
             {
                 "fileName": "asset_synthetic-fertilizer-application-top500_emissions.csv",
@@ -152,12 +216,26 @@
                     "asset_name",
                     "asset_type",
                     "st_astext"
-
                 ]
             },
             {
                 "fileName": "asset_enteric-fermentation_ownership.csv",
-                "csvColumns": []
+                "csvColumns": [
+                    "asset_id",
+                    "asset_name",
+                    "owner_name",
+                    "owner_classification",
+                    "percentage_of_ownership",
+                    "owner_direct_parent",
+                    "owner_grouping",
+                    "operator_name",
+                    "percentage_of_operation",
+                    "data_source",
+                    "url",
+                    "recency",
+                    "created_date",
+                    "original_inventory_sector"
+                ]
             }
         ],
         "directory": "agriculture"
@@ -166,11 +244,33 @@
         "inventories": [
             {
                 "fileName": "country_other-onsite-fuel-usage_emissions.csv",
-                "csvColumns": []
+                "csvColumns": [
+                    "iso3_country",
+                    "start_time",
+                    "end_time",
+                    "original_inventory_sector",
+                    "gas",
+                    "emissions_quantity",
+                    "emissions_quantity_units",
+                    "temporal_granularity",
+                    "created_date",
+                    "modified_date"
+                ]
             },
             {
                 "fileName": "country_residential-and-commercial-onsite-fuel-usage_emissions.csv",
-                "csvColumns": []
+                "csvColumns": [
+                    "iso3_country",
+                    "start_time",
+                    "end_time",
+                    "original_inventory_sector",
+                    "gas",
+                    "emissions_quantity",
+                    "emissions_quantity_units",
+                    "temporal_granularity",
+                    "created_date",
+                    "modified_date"
+                ]
             }
         ],
         "directory": "buildings"
@@ -179,7 +279,18 @@
         "inventories": [
             {
                 "fileName": "country_fluorinated-gases_emissions.csv",
-                "csvColumns": []
+                "csvColumns": [
+                    "iso3_country",
+                    "start_time",
+                    "end_time",
+                    "original_inventory_sector",
+                    "gas",
+                    "emissions_quantity",
+                    "emissions_quantity_units",
+                    "temporal_granularity",
+                    "created_date",
+                    "modified_date"
+                ]
             }
         ],
         "directory": "fluorinated_gases"
@@ -234,7 +345,22 @@
             },
             {
                 "fileName": "asset_oil-and-gas-production-and-transport_ownership.csv",
-                "csvColumns": []
+                "csvColumns": [
+                    "asset_id",
+                    "asset_name",
+                    "owner_name",
+                    "owner_classification",
+                    "percentage_of_ownership",
+                    "owner_direct_parent",
+                    "owner_grouping",
+                    "operator_name",
+                    "percentage_of_operation",
+                    "data_source",
+                    "url",
+                    "recency",
+                    "created_date",
+                    "original_inventory_sector"
+                ]
             },
             {
                 "fileName": "asset_oil-and-gas-refining_emissions.csv",
@@ -261,27 +387,97 @@
             },
             {
                 "fileName": "asset_oil-and-gas-refining_ownership.csv",
-                "csvColumns": []
+                "csvColumns": [
+                    "asset_id",
+                    "asset_name",
+                    "owner_name",
+                    "owner_classification",
+                    "percentage_of_ownership",
+                    "owner_direct_parent",
+                    "owner_grouping",
+                    "operator_name",
+                    "percentage_of_operation",
+                    "data_source",
+                    "url",
+                    "recency",
+                    "created_date",
+                    "original_inventory_sector"
+                ]
             },
             {
                 "fileName": "country_coal-mining_emissions.csv",
-                "csvColumns": []
+                "csvColumns": [
+                    "iso3_country",
+                    "start_time",
+                    "end_time",
+                    "original_inventory_sector",
+                    "gas",
+                    "emissions_quantity",
+                    "emissions_quantity_units",
+                    "temporal_granularity",
+                    "created_date",
+                    "modified_date"
+                ]
             },
             {
                 "fileName": "country_oil-and-gas-production-and-transport_emissions.csv",
-                "csvColumns": []
+                "csvColumns": [
+                    "iso3_country",
+                    "start_time",
+                    "end_time",
+                    "original_inventory_sector",
+                    "gas",
+                    "emissions_quantity",
+                    "emissions_quantity_units",
+                    "temporal_granularity",
+                    "created_date",
+                    "modified_date"
+                ]
             },
             {
                 "fileName": "country_oil-and-gas-refining_emissions.csv",
-                "csvColumns": []
+                "csvColumns": [
+                    "iso3_country",
+                    "start_time",
+                    "end_time",
+                    "original_inventory_sector",
+                    "gas",
+                    "emissions_quantity",
+                    "emissions_quantity_units",
+                    "temporal_granularity",
+                    "created_date",
+                    "modified_date"
+                ]
             },
             {
                 "fileName": "country_other-fossil-fuel-operations_emissions.csv",
-                "csvColumns": []
+                "csvColumns": [
+                    "iso3_country",
+                    "start_time",
+                    "end_time",
+                    "original_inventory_sector",
+                    "gas",
+                    "emissions_quantity",
+                    "emissions_quantity_units",
+                    "temporal_granularity",
+                    "created_date",
+                    "modified_date"
+                ]
             },
             {
                 "fileName": "country_solid-fuel-transformation_emissions.csv",
-                "csvColumns": []
+                "csvColumns": [
+                    "iso3_country",
+                    "start_time",
+                    "end_time",
+                    "original_inventory_sector",
+                    "gas",
+                    "emissions_quantity",
+                    "emissions_quantity_units",
+                    "temporal_granularity",
+                    "created_date",
+                    "modified_date"
+                ]
             }
         ],
         "directory": "fossil_fuel_operations"
@@ -336,7 +532,22 @@
             },
             {
                 "fileName": "asset_cement_ownership.csv",
-                "csvColumns": []
+                "csvColumns": [
+                    "asset_id",
+                    "asset_name",
+                    "owner_name",
+                    "owner_classification",
+                    "percentage_of_ownership",
+                    "owner_direct_parent",
+                    "owner_grouping",
+                    "operator_name",
+                    "percentage_of_operation",
+                    "data_source",
+                    "url",
+                    "recency",
+                    "created_date",
+                    "original_inventory_sector"
+                ]
             },
             {
                 "fileName": "asset_steel_emissions.csv",
@@ -363,31 +574,112 @@
             },
             {
                 "fileName": "asset_steel_ownership.csv",
-                "csvColumns": []
+                "csvColumns": [
+                    "asset_id",
+                    "asset_name",
+                    "owner_name",
+                    "owner_classification",
+                    "percentage_of_ownership",
+                    "owner_direct_parent",
+                    "owner_grouping",
+                    "operator_name",
+                    "percentage_of_operation",
+                    "data_source",
+                    "url",
+                    "recency",
+                    "created_date",
+                    "original_inventory_sector"
+                ]
             },
             {
                 "fileName": "country_aluminum_emissions.csv",
-                "csvColumns": []
+                "csvColumns": [
+                    "iso3_country",
+                    "start_time",
+                    "end_time",
+                    "original_inventory_sector",
+                    "gas",
+                    "emissions_quantity",
+                    "emissions_quantity_units",
+                    "temporal_granularity",
+                    "created_date",
+                    "modified_date"
+                ]
             },
             {
                 "fileName": "country_cement_emissions.csv",
-                "csvColumns": []
+                "csvColumns": [
+                    "iso3_country",
+                    "start_time",
+                    "end_time",
+                    "original_inventory_sector",
+                    "gas",
+                    "emissions_quantity",
+                    "emissions_quantity_units",
+                    "temporal_granularity",
+                    "created_date",
+                    "modified_date"
+                ]
             },
             {
                 "fileName": "country_chemicals_emissions.csv",
-                "csvColumns": []
+                "csvColumns": [
+                    "iso3_country",
+                    "start_time",
+                    "end_time",
+                    "original_inventory_sector",
+                    "gas",
+                    "emissions_quantity",
+                    "emissions_quantity_units",
+                    "temporal_granularity",
+                    "created_date",
+                    "modified_date"
+                ]
             },
             {
                 "fileName": "country_other-manufacturing_emissions.csv",
-                "csvColumns": []
+                "csvColumns": [
+                    "iso3_country",
+                    "start_time",
+                    "end_time",
+                    "original_inventory_sector",
+                    "gas",
+                    "emissions_quantity",
+                    "emissions_quantity_units",
+                    "temporal_granularity",
+                    "created_date",
+                    "modified_date"
+                ]
             },
             {
                 "fileName": "country_pulp-and-paper_emissions.csv",
-                "csvColumns": []
+                "csvColumns": [
+                    "iso3_country",
+                    "start_time",
+                    "end_time",
+                    "original_inventory_sector",
+                    "gas",
+                    "emissions_quantity",
+                    "emissions_quantity_units",
+                    "temporal_granularity",
+                    "created_date",
+                    "modified_date"
+                ]
             },
             {
                 "fileName": "country_steel_emissions.csv",
-                "csvColumns": []
+                "csvColumns": [
+                    "iso3_country",
+                    "start_time",
+                    "end_time",
+                    "original_inventory_sector",
+                    "gas",
+                    "emissions_quantity",
+                    "emissions_quantity_units",
+                    "temporal_granularity",
+                    "created_date",
+                    "modified_date"
+                ]
             }
         ],
         "directory": "manufacturing"
@@ -396,35 +688,141 @@
         "inventories": [
             {
                 "fileName": "country_bauxite-mining_emissions.csv",
-                "csvColumns": []
+                "csvColumns": [
+                    "iso3_country",
+                    "start_time",
+                    "end_time",
+                    "original_inventory_sector",
+                    "gas",
+                    "emissions_quantity",
+                    "emissions_quantity_units",
+                    "temporal_granularity",
+                    "created_date",
+                    "modified_date"
+                ]
             },
             {
                 "fileName": "country_copper-mining_emissions.csv",
-                "csvColumns": []
+                "csvColumns": [
+                    "iso3_country",
+                    "start_time",
+                    "end_time",
+                    "original_inventory_sector",
+                    "gas",
+                    "emissions_quantity",
+                    "emissions_quantity_units",
+                    "temporal_granularity",
+                    "created_date",
+                    "modified_date"
+                ]
             },
             {
                 "fileName": "country_iron-mining_emissions.csv",
-                "csvColumns": []
+                "csvColumns": [
+                    "iso3_country",
+                    "start_time",
+                    "end_time",
+                    "original_inventory_sector",
+                    "gas",
+                    "emissions_quantity",
+                    "emissions_quantity_units",
+                    "temporal_granularity",
+                    "created_date",
+                    "modified_date"
+                ]
             },
             {
                 "fileName": "country_rock-quarrying_emissions.csv",
-                "csvColumns": []
+                "csvColumns": [
+                    "iso3_country",
+                    "start_time",
+                    "end_time",
+                    "original_inventory_sector",
+                    "gas",
+                    "emissions_quantity",
+                    "emissions_quantity_units",
+                    "temporal_granularity",
+                    "created_date",
+                    "modified_date"
+                ]
             },
             {
                 "fileName": "country_sand-quarrying_emissions.csv",
-                "csvColumns": []
+                "csvColumns": [
+                    "iso3_country",
+                    "start_time",
+                    "end_time",
+                    "original_inventory_sector",
+                    "gas",
+                    "emissions_quantity",
+                    "emissions_quantity_units",
+                    "temporal_granularity",
+                    "created_date",
+                    "modified_date"
+                ]
             },
             {
                 "fileName": "asset_iron-mining_emissions.csv",
-                "csvColumns": []
+                "csvColumns": [
+                    "asset_id",
+                    "iso3_country",
+                    "original_inventory_sector",
+                    "start_time",
+                    "end_time",
+                    "temporal_granularity",
+                    "gas",
+                    "emissions_quantity",
+                    "capacity",
+                    "capacity_units",
+                    "capacity_factor",
+                    "created_date",
+                    "modified_date",
+                    "asset_name",
+                    "asset_type",
+                    "st_astext"
+                ]
             },
             {
                 "fileName": "asset_bauxite-mining_emissions.csv",
-                "csvColumns": []
+                "csvColumns": [
+                    "asset_id",
+                    "iso3_country",
+                    "original_inventory_sector",
+                    "start_time",
+                    "end_time",
+                    "temporal_granularity",
+                    "gas",
+                    "emissions_quantity",
+                    "capacity",
+                    "capacity_units",
+                    "capacity_factor",
+                    "created_date",
+                    "modified_date",
+                    "asset_name",
+                    "asset_type",
+                    "st_astext"
+                ]
             },
             {
                 "fileName": "asset_copper-mining_emissions.csv",
-                "csvColumns": []
+                "csvColumns": [
+                    "asset_id",
+                    "iso3_country",
+                    "original_inventory_sector",
+                    "start_time",
+                    "end_time",
+                    "temporal_granularity",
+                    "gas",
+                    "emissions_quantity",
+                    "capacity",
+                    "capacity_units",
+                    "capacity_factor",
+                    "created_date",
+                    "modified_date",
+                    "asset_name",
+                    "asset_type",
+                    "st_astext"
+                ]
             }
         ],
         "directory": "mineral_extraction"
@@ -433,11 +831,33 @@
         "inventories": [
             {
                 "fileName": "country_electricity-generation_emissions.csv",
-                "csvColumns": []
+                "csvColumns": [
+                    "iso3_country",
+                    "start_time",
+                    "end_time",
+                    "original_inventory_sector",
+                    "gas",
+                    "emissions_quantity",
+                    "emissions_quantity_units",
+                    "temporal_granularity",
+                    "created_date",
+                    "modified_date"
+                ]
             },
             {
                 "fileName": "country_other-energy-use_emissions.csv",
-                "csvColumns": []
+                "csvColumns": [
+                    "iso3_country",
+                    "start_time",
+                    "end_time",
+                    "original_inventory_sector",
+                    "gas",
+                    "emissions_quantity",
+                    "emissions_quantity_units",
+                    "temporal_granularity",
+                    "created_date",
+                    "modified_date"
+                ]
             },
             {
                 "fileName": "asset_electricity-generation_emissions.csv",
@@ -462,7 +882,8 @@
                     "asset_name",
                     "asset_type",
                     "st_astext"
-                ]            },
+                ]
+            },
             {
                 "fileName": "asset_electricity-generation_ownership.csv",
                 "csvColumns": [
@@ -589,27 +1010,93 @@
             },
             {
                 "fileName": "country_domestic-aviation_emissions.csv",
-                "csvColumns": []
+                "csvColumns": [
+                    "iso3_country",
+                    "start_time",
+                    "end_time",
+                    "original_inventory_sector",
+                    "gas",
+                    "emissions_quantity",
+                    "emissions_quantity_units",
+                    "temporal_granularity",
+                    "created_date",
+                    "modified_date"
+                ]
             },
             {
                 "fileName": "country_international-aviation_emissions.csv",
-                "csvColumns": []
+                "csvColumns": [
+                    "iso3_country",
+                    "start_time",
+                    "end_time",
+                    "original_inventory_sector",
+                    "gas",
+                    "emissions_quantity",
+                    "emissions_quantity_units",
+                    "temporal_granularity",
+                    "created_date",
+                    "modified_date"
+                ]
             },
             {
                 "fileName": "country_other-transport_emissions.csv",
-                "csvColumns": []
+                "csvColumns": [
+                    "iso3_country",
+                    "start_time",
+                    "end_time",
+                    "original_inventory_sector",
+                    "gas",
+                    "emissions_quantity",
+                    "emissions_quantity_units",
+                    "temporal_granularity",
+                    "created_date",
+                    "modified_date"
+                ]
             },
             {
                 "fileName": "country_railways_emissions.csv",
-                "csvColumns": []
+                "csvColumns": [
+                    "iso3_country",
+                    "start_time",
+                    "end_time",
+                    "original_inventory_sector",
+                    "gas",
+                    "emissions_quantity",
+                    "emissions_quantity_units",
+                    "temporal_granularity",
+                    "created_date",
+                    "modified_date"
+                ]
             },
             {
                 "fileName": "country_road-transportation_emissions.csv",
-                "csvColumns": []
+                "csvColumns": [
+                    "iso3_country",
+                    "start_time",
+                    "end_time",
+                    "original_inventory_sector",
+                    "gas",
+                    "emissions_quantity",
+                    "emissions_quantity_units",
+                    "temporal_granularity",
+                    "created_date",
+                    "modified_date"
+                ]
             },
             {
                 "fileName": "country_shipping_emissions.csv",
-                "csvColumns": []
+                "csvColumns": [
+                    "iso3_country",
+                    "start_time",
+                    "end_time",
+                    "original_inventory_sector",
+                    "gas",
+                    "emissions_quantity",
+                    "emissions_quantity_units",
+                    "temporal_granularity",
+                    "created_date",
+                    "modified_date"
+                ]
             }
         ],
         "directory": "transportation"
@@ -618,19 +1105,63 @@
         "inventories": [
             {
                 "fileName": "country_biological-treatment-of-solid-waste-&-biogenic_emissions.csv",
-                "csvColumns": []
+                "csvColumns": [
+                    "iso3_country",
+                    "start_time",
+                    "end_time",
+                    "original_inventory_sector",
+                    "gas",
+                    "emissions_quantity",
+                    "emissions_quantity_units",
+                    "temporal_granularity",
+                    "created_date",
+                    "modified_date"
+                ]
             },
             {
                 "fileName": "country_incineration-and-open-burning-of-waste_emissions.csv",
-                "csvColumns": []
+                "csvColumns": [
+                    "iso3_country",
+                    "start_time",
+                    "end_time",
+                    "original_inventory_sector",
+                    "gas",
+                    "emissions_quantity",
+                    "emissions_quantity_units",
+                    "temporal_granularity",
+                    "created_date",
+                    "modified_date"
+                ]
             },
             {
                 "fileName": "country_solid-waste-disposal_emissions.csv",
-                "csvColumns": []
+                "csvColumns": [
+                    "iso3_country",
+                    "start_time",
+                    "end_time",
+                    "original_inventory_sector",
+                    "gas",
+                    "emissions_quantity",
+                    "emissions_quantity_units",
+                    "temporal_granularity",
+                    "created_date",
+                    "modified_date"
+                ]
             },
             {
                 "fileName": "country_wastewater-treatment-and-discharge_emissions.csv",
-                "csvColumns": []
+                "csvColumns": [
+                    "iso3_country",
+                    "start_time",
+                    "end_time",
+                    "original_inventory_sector",
+                    "gas",
+                    "emissions_quantity",
+                    "emissions_quantity_units",
+                    "temporal_granularity",
+                    "created_date",
+                    "modified_date"
+                ]
             },
             {
                 "fileName": "asset_solid-waste-disposal_emissions.csv",

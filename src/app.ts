@@ -158,7 +158,7 @@ class App {
 
         for (var c = 0; c < this.countryList.length; c++) {
             const thisCountry = this.countryList[c];
-            // if (thisCountry.alpha3 !== "GBR" && thisCountry.alpha3 !== "AFG") { continue; }
+            if (thisCountry.alpha3 !== "GBR" && thisCountry.alpha3 !== "AFG") { continue; }
 
             for (var il = 0; il < this.inventoryList.length; il++) {
                 const thisInventoryList: DataInventory = this.inventoryList[il];
@@ -309,7 +309,7 @@ class App {
                                     this.countryElectricityEmissionsConnector);
                                 break;
                             default:
-                                // console.log(`did not import file ${thisInventory.fileName}`);
+                                console.log(`did not import file ${thisInventory.fileName}`);
                                 break;
                         }
                     }
