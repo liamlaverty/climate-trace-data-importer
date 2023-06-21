@@ -10,12 +10,9 @@ import 'dotenv/config'
 import { fileURLToPath } from 'url';
 import * as path from 'path';
 import * as fs from 'fs';
-import { parse } from 'csv-parse';
 
-import * as readLine from 'readline';
 import { CountryEmissionsConnector } from './db/table-connectors/CountryEmissionsConnector.js';
 import { AssetEmissionsConnector } from './db/table-connectors/AssetEmissionsConnector.js';
-import { AssetEmissionsImporter } from './importers/AssetEmissionsImporter.js';
 import { CountryEmissionsImporter } from './importers/CountryEmissionsImporter.js';
 
 class App {
@@ -47,87 +44,10 @@ class App {
         this.SetCountryList();
         this.SetInventoryList();
 
-        // this.BuildDataInventoriesJsonFile();
-
         // console.log('importing data');
         this.ImportData();
         // console.log('completed importing data');
 
-    }
-
-    /* 
-    * Builds a data inventory json file
-    * 
-    * 
-    */
-    private async BuildDataInventoriesJsonFile() {
-        const jsonObj = new Array<DataInventory>();
-        for (var c = 0; c < this.countryList.length; c++) {
-
-            const thisCountry = this.countryList[c];
-            const filePath = path.resolve(this.filePathAbs, `./climate_trace/country_packages/non_forest_sectors/${thisCountry.alpha3}`);
-
-            // list each directory
-            const directories = fs.readdirSync(filePath);
-            for (var dir of directories) {
-                const lstat = fs.lstatSync(path.resolve(filePath, dir));
-                if (lstat.isDirectory()) {
-
-                    let isUnique = true;
-                    for (var i = 0; i < jsonObj.length; i++) {
-
-                        if (jsonObj[i].directory === dir) {
-                            isUnique = false;
-                            break;
-                        }
-                    }
-                    if (isUnique) {
-                        const newObj = <DataInventory>({
-                            inventories: [],
-                            directory: dir
-                        });
-                        console.log(`pushing ${JSON.stringify(jsonObj)}`);
-                        jsonObj.push(newObj);
-                    }
-
-                    const filePathSubDir = path.resolve(this.filePathAbs, `./climate_trace/country_packages/non_forest_sectors/${thisCountry.alpha3}/${dir}/`);
-                    const subDirectories = fs.readdirSync(filePathSubDir);
-
-                    for (var subDirectory of subDirectories) {
-                        // loop through all the children of this directory, check if the filename's unique
-                        // if so, add that filename to the inventories object. Add the csvColumns from the file 
-                        // into the csvColumns property
-                        // 
-                        // If the filename isn't unique, read the csvColumns from the existing and current, and 
-                        // check they match. If they don't match, console.error()
-                        const obj = jsonObj.find(c => c.directory === dir);
-                        const filePathCsv = path.resolve(this.filePathAbs, `./climate_trace/country_packages/non_forest_sectors/${thisCountry.alpha3}/${dir}/`, subDirectory);
-
-
-                        if (obj.directory === dir) {
-                            if (obj.inventories.some(c => c.fileName === subDirectory)) {
-                                console.log('non unique item')
-                            } else {
-                                console.log('unique item');
-                                const newInventory = <DataInventoryItem>({
-                                    fileName: subDirectory,
-                                    csvColumns: []
-                                });
-                                obj.inventories.push(newInventory)
-                            }
-
-                        }
-                        console.log(`file: ${subDirectory}`);
-                        //});
-                        
-
-                        
-
-                    }
-                }
-            }
-        }
-        console.log(`end: ${JSON.stringify(jsonObj)}`);
     }
 
     /* 
@@ -158,10 +78,10 @@ class App {
 
         for (var c = 0; c < this.countryList.length; c++) {
             const thisCountry = this.countryList[c];
-            if (thisCountry.alpha3 !== "GBR")// && thisCountry.alpha3 !== "AFG") 
-            { 
-                continue; 
-            }
+            // if (thisCountry.alpha3 !== "GBR")// && thisCountry.alpha3 !== "AFG") 
+            // {
+            //     continue;
+            // }
 
             for (var il = 0; il < this.inventoryList.length; il++) {
                 const thisInventoryList: DataInventory = this.inventoryList[il];
@@ -187,7 +107,222 @@ class App {
                                     this.countryElectricityEmissionsConnector,
                                     thisInventory.csvColumns);
                                 break;
-
+                            case 'country_enteric-fermentation_emissions.csv':
+                                CountryEmissionsImporter.Import(filePath,
+                                    thisCountry.alpha3,
+                                    this.countryElectricityEmissionsConnector,
+                                    thisInventory.csvColumns);
+                                break;
+                            case 'country_manure-management_emissions.csv':
+                                CountryEmissionsImporter.Import(filePath,
+                                    thisCountry.alpha3,
+                                    this.countryElectricityEmissionsConnector,
+                                    thisInventory.csvColumns);
+                                break;
+                            case 'country_other-agricultural-soil-emissions_emissions.csv':
+                                CountryEmissionsImporter.Import(filePath,
+                                    thisCountry.alpha3,
+                                    this.countryElectricityEmissionsConnector,
+                                    thisInventory.csvColumns);
+                                break;
+                            case 'country_rice-cultivation_emissions.csv':
+                                CountryEmissionsImporter.Import(filePath,
+                                    thisCountry.alpha3,
+                                    this.countryElectricityEmissionsConnector,
+                                    thisInventory.csvColumns);
+                                break;
+                            case 'country_synthetic-fertilizer-application_emissions.csv':
+                                CountryEmissionsImporter.Import(filePath,
+                                    thisCountry.alpha3,
+                                    this.countryElectricityEmissionsConnector,
+                                    thisInventory.csvColumns);
+                                break;
+                            case 'country_other-onsite-fuel-usage_emissions.csv':
+                                CountryEmissionsImporter.Import(filePath,
+                                    thisCountry.alpha3,
+                                    this.countryElectricityEmissionsConnector,
+                                    thisInventory.csvColumns);
+                                break;
+                            case 'country_residential-and-commercial-onsite-fuel-usage_emissions.csv':
+                                CountryEmissionsImporter.Import(filePath,
+                                    thisCountry.alpha3,
+                                    this.countryElectricityEmissionsConnector,
+                                    thisInventory.csvColumns);
+                                break;
+                            case 'country_fluorinated-gases_emissions.csv':
+                                CountryEmissionsImporter.Import(filePath,
+                                    thisCountry.alpha3,
+                                    this.countryElectricityEmissionsConnector,
+                                    thisInventory.csvColumns);
+                                break;
+                            case 'country_coal-mining_emissions.csv':
+                                CountryEmissionsImporter.Import(filePath,
+                                    thisCountry.alpha3,
+                                    this.countryElectricityEmissionsConnector,
+                                    thisInventory.csvColumns);
+                                break;
+                            case 'country_oil-and-gas-production-and-transport_emissions.csv':
+                                CountryEmissionsImporter.Import(filePath,
+                                    thisCountry.alpha3,
+                                    this.countryElectricityEmissionsConnector,
+                                    thisInventory.csvColumns);
+                                break;
+                            case 'country_oil-and-gas-refining_emissions.csv':
+                                CountryEmissionsImporter.Import(filePath,
+                                    thisCountry.alpha3,
+                                    this.countryElectricityEmissionsConnector,
+                                    thisInventory.csvColumns);
+                                break;
+                            case 'country_other-fossil-fuel-operations_emissions.csv':
+                                CountryEmissionsImporter.Import(filePath,
+                                    thisCountry.alpha3,
+                                    this.countryElectricityEmissionsConnector,
+                                    thisInventory.csvColumns);
+                                break;
+                            case 'country_solid-fuel-transformation_emissions.csv':
+                                CountryEmissionsImporter.Import(filePath,
+                                    thisCountry.alpha3,
+                                    this.countryElectricityEmissionsConnector,
+                                    thisInventory.csvColumns);
+                                break;
+                            case 'country_aluminum_emissions.csv':
+                                CountryEmissionsImporter.Import(filePath,
+                                    thisCountry.alpha3,
+                                    this.countryElectricityEmissionsConnector,
+                                    thisInventory.csvColumns);
+                                break;
+                            case 'country_cement_emissions.csv':
+                                CountryEmissionsImporter.Import(filePath,
+                                    thisCountry.alpha3,
+                                    this.countryElectricityEmissionsConnector,
+                                    thisInventory.csvColumns);
+                                break;
+                            case 'country_chemicals_emissions.csv':
+                                CountryEmissionsImporter.Import(filePath,
+                                    thisCountry.alpha3,
+                                    this.countryElectricityEmissionsConnector,
+                                    thisInventory.csvColumns);
+                                break;
+                            case 'country_other-manufacturing_emissions.csv':
+                                CountryEmissionsImporter.Import(filePath,
+                                    thisCountry.alpha3,
+                                    this.countryElectricityEmissionsConnector,
+                                    thisInventory.csvColumns);
+                                break;
+                            case 'country_pulp-and-paper_emissions.csv':
+                                CountryEmissionsImporter.Import(filePath,
+                                    thisCountry.alpha3,
+                                    this.countryElectricityEmissionsConnector,
+                                    thisInventory.csvColumns);
+                                break;
+                            case 'country_steel_emissions.csv':
+                                CountryEmissionsImporter.Import(filePath,
+                                    thisCountry.alpha3,
+                                    this.countryElectricityEmissionsConnector,
+                                    thisInventory.csvColumns);
+                                break;
+                            case 'country_bauxite-mining_emissions.csv':
+                                CountryEmissionsImporter.Import(filePath,
+                                    thisCountry.alpha3,
+                                    this.countryElectricityEmissionsConnector,
+                                    thisInventory.csvColumns);
+                                break;
+                            case 'country_copper-mining_emissions.csv':
+                                CountryEmissionsImporter.Import(filePath,
+                                    thisCountry.alpha3,
+                                    this.countryElectricityEmissionsConnector,
+                                    thisInventory.csvColumns);
+                                break;
+                            case 'country_iron-mining_emissions.csv':
+                                CountryEmissionsImporter.Import(filePath,
+                                    thisCountry.alpha3,
+                                    this.countryElectricityEmissionsConnector,
+                                    thisInventory.csvColumns);
+                                break;
+                            case 'country_rock-quarrying_emissions.csv':
+                                CountryEmissionsImporter.Import(filePath,
+                                    thisCountry.alpha3,
+                                    this.countryElectricityEmissionsConnector,
+                                    thisInventory.csvColumns);
+                                break;
+                            case 'country_sand-quarrying_emissions.csv':
+                                CountryEmissionsImporter.Import(filePath,
+                                    thisCountry.alpha3,
+                                    this.countryElectricityEmissionsConnector,
+                                    thisInventory.csvColumns);
+                                break;
+                            case 'country_electricity-generation_emissions.csv':
+                                CountryEmissionsImporter.Import(filePath,
+                                    thisCountry.alpha3,
+                                    this.countryElectricityEmissionsConnector,
+                                    thisInventory.csvColumns);
+                                break;
+                            case 'country_other-energy-use_emissions.csv':
+                                CountryEmissionsImporter.Import(filePath,
+                                    thisCountry.alpha3,
+                                    this.countryElectricityEmissionsConnector,
+                                    thisInventory.csvColumns);
+                                break;
+                            case 'country_domestic-aviation_emissions.csv':
+                                CountryEmissionsImporter.Import(filePath,
+                                    thisCountry.alpha3,
+                                    this.countryElectricityEmissionsConnector,
+                                    thisInventory.csvColumns);
+                                break;
+                            case 'country_international-aviation_emissions.csv':
+                                CountryEmissionsImporter.Import(filePath,
+                                    thisCountry.alpha3,
+                                    this.countryElectricityEmissionsConnector,
+                                    thisInventory.csvColumns);
+                                break;
+                            case 'country_other-transport_emissions.csv':
+                                CountryEmissionsImporter.Import(filePath,
+                                    thisCountry.alpha3,
+                                    this.countryElectricityEmissionsConnector,
+                                    thisInventory.csvColumns);
+                                break;
+                            case 'country_railways_emissions.csv':
+                                CountryEmissionsImporter.Import(filePath,
+                                    thisCountry.alpha3,
+                                    this.countryElectricityEmissionsConnector,
+                                    thisInventory.csvColumns);
+                                break;
+                            case 'country_road-transportation_emissions.csv':
+                                CountryEmissionsImporter.Import(filePath,
+                                    thisCountry.alpha3,
+                                    this.countryElectricityEmissionsConnector,
+                                    thisInventory.csvColumns);
+                                break;
+                            case 'country_shipping_emissions.csv':
+                                CountryEmissionsImporter.Import(filePath,
+                                    thisCountry.alpha3,
+                                    this.countryElectricityEmissionsConnector,
+                                    thisInventory.csvColumns);
+                                break;
+                            case 'country_biological-treatment-of-solid-waste-&-biogenic_emissions.csv':
+                                CountryEmissionsImporter.Import(filePath,
+                                    thisCountry.alpha3,
+                                    this.countryElectricityEmissionsConnector,
+                                    thisInventory.csvColumns);
+                                break;
+                            case 'country_incineration-and-open-burning-of-waste_emissions.csv':
+                                CountryEmissionsImporter.Import(filePath,
+                                    thisCountry.alpha3,
+                                    this.countryElectricityEmissionsConnector,
+                                    thisInventory.csvColumns);
+                                break;
+                            case 'country_solid-waste-disposal_emissions.csv':
+                                CountryEmissionsImporter.Import(filePath,
+                                    thisCountry.alpha3,
+                                    this.countryElectricityEmissionsConnector,
+                                    thisInventory.csvColumns);
+                                break;
+                            case 'country_wastewater-treatment-and-discharge_emissions.csv':
+                                CountryEmissionsImporter.Import(filePath,
+                                    thisCountry.alpha3,
+                                    this.countryElectricityEmissionsConnector,
+                                    thisInventory.csvColumns);
+                                break;
                             // case 'asset_cropland-fires_emissions.csv':
                             //     AssetEmissionsImporter.Import(
                             //         filePath,
@@ -202,7 +337,7 @@ class App {
                             //         this.assetEmissionsConnector,
                             //         thisInventory.csvColumns);
                             //     break;
-                            
+
                             // case 'asset_manure-management_emissions.csv':
                             //     AssetEmissionsImporter.Import(
                             //         filePath,
@@ -216,7 +351,7 @@ class App {
                             // case 'asset_rice-cultivation-top500_emissions.csv':
                             //     console.warn(`skipped asset_rice-cultivation-top500_emissions for country ${thisCountry.alpha3} (enormous files)`)
                             //     break;
-                            
+
 
                             //  case 'asset_aluminum_emissions.csv':
                             //      AssetEmissionsImporter.Import(
