@@ -1,7 +1,7 @@
 import { TrackedDataEntity } from "./TrackedDataEntity.js";
 
 
-export class CountryElectricityEmissions extends TrackedDataEntity {
+export class CountryEmissions extends TrackedDataEntity {
 
     static tableName: string = 'country_electricity_emissions';
 

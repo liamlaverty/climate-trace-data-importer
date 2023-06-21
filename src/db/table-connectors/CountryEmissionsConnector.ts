@@ -1,4 +1,4 @@
-import { CountryElectricityEmissions } from "../../models/db-models/CountryElectricityEmissions.js";
+import { CountryEmissions } from "../../models/db-models/CountryEmissions.js";
 import { DbConnector } from "../DbConnector.js";
 
 export class CountryEmissionsConnector {
@@ -10,7 +10,7 @@ export class CountryEmissionsConnector {
         this.database = conn;
     }
 
-    public insert = async(country_emissions: CountryElectricityEmissions, callback) => {
+    public insert = async(country_emissions: CountryEmissions, callback) => {
         // console.log(`upserting query ${JSON.stringify(country_emissions)}`);
         const dateNow = new Date().toISOString();
         const query = {
@@ -59,7 +59,7 @@ export class CountryEmissionsConnector {
                 country_emissions.emissions_quantity,
                 country_emissions.emissions_quantity_units,
                 country_emissions.temporal_granularity,
-                CountryElectricityEmissions.origin_source,
+                CountryEmissions.origin_source,
                 country_emissions.created_date,
                 country_emissions.modified_date.length > 0 ? country_emissions.modified_date : null,
                 dateNow,

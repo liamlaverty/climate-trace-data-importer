@@ -13,10 +13,10 @@ import * as fs from 'fs';
 import { parse } from 'csv-parse';
 
 import * as readLine from 'readline';
-import { CountryEmissionsConnector } from './db/table-connectors/CountryElectricityEmissionsConnector.js';
+import { CountryEmissionsConnector } from './db/table-connectors/CountryEmissionsConnector.js';
 import { AssetEmissionsConnector } from './db/table-connectors/AssetEmissionsConnector.js';
 import { AssetEmissionsImporter } from './importers/AssetEmissionsImporter.js';
-import { CountryEmissionsImporter } from './importers/CountryElectricityGenerationEmissionsImporter.js';
+import { CountryEmissionsImporter } from './importers/CountryEmissionsImporter.js';
 
 class App {
     filePathAbs: string;

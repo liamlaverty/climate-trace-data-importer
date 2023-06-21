@@ -1,7 +1,7 @@
 import * as fs from 'fs';
 import { parse } from 'csv-parse';
-import { CountryElectricityEmissions } from '../models/db-models/CountryElectricityEmissions.js';
-import { CountryEmissionsConnector } from '../db/table-connectors/CountryElectricityEmissionsConnector.js';
+import { CountryEmissions } from '../models/db-models/CountryEmissions.js';
+import { CountryEmissionsConnector } from '../db/table-connectors/CountryEmissionsConnector.js';
 
 export class CountryEmissionsImporter {
 
@@ -20,7 +20,7 @@ export class CountryEmissionsImporter {
                 }
                 else { return columnVal; }
             }
-        }, async (error, result: CountryElectricityEmissions[]) => {
+        }, async (error, result: CountryEmissions[]) => {
             if (error) {
                 console.error(error);
             }
