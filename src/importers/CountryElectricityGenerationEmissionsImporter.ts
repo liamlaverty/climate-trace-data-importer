@@ -5,23 +5,13 @@ import { CountryEmissionsConnector } from '../db/table-connectors/CountryElectri
 
 export class CountryEmissionsImporter {
 
-    static Import = async(filePath: string, countryAlpha3: string, dbConn: CountryEmissionsConnector) => {
+    static Import = async(filePath: string, countryAlpha3: string, dbConn: CountryEmissionsConnector, 
+        csvColumns: string[]) => {
         console.log(`opening: ${filePath}`);
         const fileContents = fs.readFileSync(filePath, 'utf-8');
         parse(fileContents, {
             delimiter: ',',
-            columns: [
-                'iso3_country',
-                'start_time',
-                'end_time',
-                'original_inventory_sector',
-                'gas',
-                'emissions_quantity',
-                'emissions_quantity_units',
-                'temporal_granularity',
-                'created_date',
-                'modified_date'
-            ],
+            columns: csvColumns,
             fromLine: 2,
             cast: (columnVal, context) => {
                 if (context.column == 'emissions_quantity') {

@@ -14,9 +14,9 @@ export class CountryEmissionsConnector {
         // console.log(`upserting query ${JSON.stringify(country_emissions)}`);
         const dateNow = new Date().toISOString();
         const query = {
-            name: 'insert-country-electricity-emissions',
+            name: 'insert-country-emissions',
             text:
-                `INSERT INTO country_electricity_emissions(
+                `INSERT INTO country_emissions(
                 iso3_country, 
                 start_time, 
                 end_time, 
@@ -47,7 +47,7 @@ export class CountryEmissionsConnector {
                     $13
                 )
                 ON CONFLICT
-                    ON CONSTRAINT country_electricity_emissions_pkey
+                    ON CONSTRAINT country_emissions_pkey
                         DO NOTHING
                 `,
             values: [

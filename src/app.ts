@@ -178,7 +178,14 @@ class App {
                             case 'country_electricity-generation_emissions.csv':
                                 CountryEmissionsImporter.Import(filePath,
                                     thisCountry.alpha3,
-                                    this.countryElectricityEmissionsConnector);
+                                    this.countryElectricityEmissionsConnector,
+                                    thisInventory.csvColumns);
+                                break;
+                            case 'country_cropland-fires_emissions.csv':
+                                CountryEmissionsImporter.Import(filePath,
+                                    thisCountry.alpha3,
+                                    this.countryElectricityEmissionsConnector,
+                                    thisInventory.csvColumns);
                                 break;
 
                             // case 'asset_cropland-fires_emissions.csv':
