@@ -1,8 +1,19 @@
-# climate-trace-data-importer
-Imports inventory datasets from the ClimateTrace repositories into a postgresql database
+# (Unofficial) Climate Trace Data Importer
+Imports inventory datasets from the [ClimateTrace](https://climatetrace.org/) repositories into a Postgres/PostGIS database
 
 Companion application to https://github.com/liamlaverty/climate-trace-data-downloader
 
+## Copyright Note 
+
+This repository uses the MIT License. The emissions inventory downloaded from ClimateTrace have different licenses, see https://climatetrace.org/faq for details
+
+## What Does It Do?
+
+* Reads through all ClimateTrace data inventory files, and imports into a PostGis database
+* Once complete, the database should contain data for the following:
+  * National emissions summary from 2015 onwards
+  * Sector emissions summary
+  * Physical asset emissions records from 2015
 
 ## Usage
 
