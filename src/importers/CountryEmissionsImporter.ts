@@ -24,7 +24,7 @@ export class CountryEmissionsImporter {
             if (error) {
                 console.error(error);
             }
-            console.log(result);
+            // console.log(result);
             for (var i = 0; i < result.length; i++) {
                 try {
                     const insResult = await dbConn.insert(result[i], null);

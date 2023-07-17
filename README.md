@@ -25,7 +25,6 @@ Application can be found in the `src` folder, and the built application can be f
 
 ```
 -> data-files/
--- --> importer-settings.json
 -- --> data/
 -> dist/
 -- --> app.js
@@ -33,7 +32,7 @@ Application can be found in the `src` folder, and the built application can be f
 
 ### Expected Data
 
-Before running, the `importer-settings.json` path should point to a folder with the following structure:
+Before running, the `.env` file's `DATA_PACKAGE_FILE_PATH` path should point to a folder with the following structure:
 
 ```
 ~/data_packages/climate_trace/
