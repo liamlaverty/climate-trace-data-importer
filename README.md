@@ -50,3 +50,11 @@ Before running, the `.env` file's `DATA_PACKAGE_FILE_PATH` path should point to 
    -> /buildings/
    -> /plus /
 ```
+
+### Expected Database
+
+The application's `.env` file should point to a **PostGIS** database with the following tables: 
+- `asset_emissions`
+- `country_emissions`
+
+Column definitions can be found in `~/src/db/table-connectors/**/*.ts`
