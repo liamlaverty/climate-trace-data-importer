@@ -3,7 +3,7 @@ Imports inventory datasets from the [ClimateTrace](https://climatetrace.org/) re
 
 Companion application to https://github.com/liamlaverty/climate-trace-data-downloader
 
-[![Build application](https://github.com/liamlaverty/climate-trace-data-importer/actions/workflows/node.js.yml/badge.svg)](https://github.com/liamlaverty/climate-trace-data-importer/actions/workflows/node.js.yml)
+[![Build application](https://github.com/liamlaverty/climate-trace-data-importer/actions/workflows/node.js.yml/badge.svg?branch=main)](https://github.com/liamlaverty/climate-trace-data-importer/actions/workflows/node.js.yml)
 
 ## Copyright Note 
 
